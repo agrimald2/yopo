@@ -1,0 +1,15 @@
+.btn-outline-info {
+  //color: #e14eca !important;
+  border-color: #e14eca;
+}
+
+.btn-outline-info:hover {
+  color: #e14eca;
+  background-color: transparent !important;
+}
+
+.btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active, .show > .btn-outline-info.dropdown-toggle {
+  color: #fff !important;
+  background-color: #e14eca;
+  border-color: #e14eca;
+}
