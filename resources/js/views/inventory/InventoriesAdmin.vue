@@ -5,6 +5,15 @@
         <form @submit.prevent="searchProducts" class="search-input">
           <input type="text" v-model="key" class="form-control" placeholder="BUSCADOR" required>
         </form>
+        <br>
+        <button type="button" @click="clearFilters" class="btn btn-info">
+                <feather type="x"/>
+                Filtros
+        </button>
+        <!--TODO
+        1. Filtros Menor Stock
+        2. Filtros por Categoría
+        -->
       </div>
       <div class="card">
         <div class="card-header">
@@ -18,24 +27,23 @@
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <table class="table">
-            <caption>
-              <page-navigation v-model="page" :pages="pages" :count="count" :items="products.length" @confirm="fetchData"/>
-            </caption>
-            <thead>
-              <th>Nombre</th>
-              <th>Paquetes</th>
-              <th>T. Kilos</th>
-              <th>Opciones</th>
-            </thead>
-            <tbody>
-              <tr v-for="item in products" :key='item.id'>
-                <td>{{ item.name }} {{ item.sub_category.name }} {{ item.category.name }}</td>
-                <td>{{ item.packages }} Pak</td>
-                <td>{{ item.weights.toFixed(3) }} Kg</td>
-                <td>
-                  <div class="btn-toolbar">
+        <hr>
+        <div class="card-body row">
+
+          <div class="col-md-6 col-12 row inventory-card" v-for="item in products" :key='item.id'>
+            <div class="col-4">
+              <img :src="'/api/products/'+item.image_url" alt="">
+            </div>
+            <div class="col-6">
+              <h4><strong>{{ item.name }}</strong></h4>
+              <h5>{{ item.category.name }}</h5>
+
+              <h6>Restante: <strong> {{ item.packages }} paquetes </strong></h6>
+            </div>
+            <div class="col-2">
+              <strong>{{ item.packages }}</strong>
+              <br>
+              <div class="btn-toolbar">
                     <button type="button" class="btn btn-secondary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <feather type="more-vertical"/>
                     </button>
@@ -45,14 +53,15 @@
                       <!-- <button class="dropdown-item" type="button">Another action</button> -->
                       <!-- <button class="dropdown-item" type="button">Retirar</button> -->
                     </div>
-                  </div>
-                </td>
-                <!-- <td>{{ item.category }}</td>
-                <td>{{ item.sub_category }}</td>
-                <td>{{ item.sale_price }}</td> -->
-              </tr>
-            </tbody>
-          </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+            <caption>
+              <page-navigation v-model="page" :pages="pages" :count="count" :items="products.length" @confirm="fetchData"/>
+            </caption>
         </div>
       </div>
     </div>
@@ -73,10 +82,16 @@ export default {
       page: 1,
       pages: null,
       count: null,
-      key: '',
+      key: null,
     }
   },
   methods: {
+    clearFilters() {
+      this.deleted = null;
+      this.payed = null;
+      this.delivered = null;
+      this.fetchData();
+    },
     fetchData() {
       var params = { page: this.page };
       axios.get('products/withInventory', { params }).then(res => {
@@ -123,6 +138,19 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  img{
+    width: 100%;
+  }
+  .row{
+    color: white;
+  }
+  .inventory-card{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  .inventory-card .col-6{
+    justify-content: center;
+    text-align: center;
+  }
 </style>

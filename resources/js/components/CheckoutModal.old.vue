@@ -14,7 +14,7 @@
         <div class="form-row">
           <div class="col-7">
             <label for="card_name">Nombre</label>
-            <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" placeholder="Del Gordo" required>
+            <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" placeholder="YOPO" required>
           </div>
           <div class="col-5">
             <label for="cardNumber">Número</label>

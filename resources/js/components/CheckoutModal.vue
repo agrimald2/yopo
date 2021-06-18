@@ -4,10 +4,10 @@
     <form @submit.prevent="submit" class="modal-content" method="post" id="pay" name="pay">
       <div class="modal-header row">
         <div class="col-8">
-          <h5>Total a pagar: <strong>S/ {{ (transactionAmount).toFixed(2) }}</strong> </h5>
+          <h5>Total a pagar3: <strong>S/ {{ (transactionAmount).toFixed(2) }}</strong> </h5>
         </div>
         <div class="col-4" style="text-align:right">
-          <img src="/images/logo.png" style="width:30%" alt="logo">
+          <img src="/images/black_circle.png" style="width:30%" alt="logo">
         </div>
       </div>
       <div class="modal-body position-relative">
@@ -67,7 +67,7 @@
         <div class="form-row">
           <div class="col">
             <label for="email">E-mail</label>
-            <input id="email" type="text" v-model="email" class="form-control" placeholder="cliente@delgordo.com">
+            <input id="email" type="text" v-model="email" class="form-control" placeholder="cliente@yopo.pe">
           </div>
         </div>
       </div>

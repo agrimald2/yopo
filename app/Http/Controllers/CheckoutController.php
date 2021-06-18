@@ -78,7 +78,7 @@ class CheckoutController extends Controller
             $payment->payment_method_id = $request->payment_method_id;
             $payment->transaction_amount = $request->transaction_amount;
             $payment->token = $request->token;
-            $payment->description = "Tienda del gordo";
+            $payment->description = "Tienda Yopo";
             $payment->installments = 1;
             $payment->payer = [
                 "email" => $request->email,

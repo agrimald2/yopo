@@ -3,24 +3,24 @@
   <div class="modal-dialog">
     <form @submit.prevent="submit" class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Del Gordo</h4>
+        <h4 class="modal-title">#COME YOPO</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="email">Por favor, ingrese su DNI, teléfono y dirección de entrega</label>
-          <select class="custom-select" v-model="delivery" required>
-            <option :value="null">SELECCIONE EL DISTRITO DE ENVIO...</option>
-            <option v-for="item in deliveries" :value="item" :key="item.id">{{ `${item.name} envio: S/ ${item.price.toFixed(2)}` }}</option>
+          <label for="email">Por favor, ingresa tus datos para continuar</label>
+          <select class="custom-select op-white" v-model="delivery" required>
+            <option :value="null" disabled="disabled" selected="selected" class="op-white">DISTRITO DE ENTREGA</option>
+            <option v-for="item in deliveries" :value="item" :key="item.id" class="op-white">{{ `${item.name} - Costo: S/ ${item.price.toFixed(2)}` }}</option>
           </select>
         </div>
         <div class="form-group">
-          <input type="text" v-model="customer.document" class="form-control" placeholder="Tu N° de DNI" minlength="8" maxlength="8" @input="findCustomer" required>
+          <input type="tel" v-model="customer.document" class="form-control" placeholder="DNI" minlength="8" maxlength="8" @input="findCustomer" required>
         </div>
         <div class="form-group">
-          <input type="text" v-model="customer.name" class="form-control" placeholder="Tus nombres" required>
+          <input type="text" v-model="customer.name" class="form-control" placeholder="Nombre Completo" required>
         </div>
         <div class="form-group">
-          <input type="text" v-model="customer.mobile" class="form-control" placeholder="Numero de celular" minlength="9" maxlength="9" required>
+          <input type="tel" v-model="customer.mobile" class="form-control" placeholder="Numero de celular" minlength="9" maxlength="9" required>
         </div>
         <div class="form-group">
           <input type="email" v-model="customer.email" class="form-control" placeholder="Email" required>
@@ -31,10 +31,13 @@
         <div class="form-group">
           <input type="text" v-model="customer.reference" class="form-control" placeholder="Referencia de la direccion" required>
         </div>
+        <div class="form-group">
+          <input type="text" v-model="observations" class="form-control" placeholder="Alguna observación">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-dark" style="color:white">
-          Siguiente
+          Confirmar
         </button>
       </div>
     </form>
@@ -74,6 +77,7 @@ export default {
         });
       }
     },
+    
     submit() {
       $('.modal').modal('hide');
       this.$loading(true);
@@ -91,10 +95,45 @@ export default {
         console.log(err.response);
       });
     }
+    
+   
   }
 }
 </script>
 
-<style>
+<style scoped>
+  select{
+      border: 1px solid black;
+    background-color: black;
+  }
+  ::placeholder{
+    color: #fff;
+  }
 
+  input{
+  border: 1px solid black;
+  background-color: black;
+  }
+  select{
+    border: 1px solid black;
+  }
+  .modal-header{
+    background-color: black;
+    color: #ddc237;
+    font-family: 'EATHOMASANS';
+  }
+  .modal-footer{
+        background-color: black;
+    font-family: 'EATHOMASANS';
+  }
+  .modal-body{
+    background-color: #ddc237;
+  }
+  button{
+    background-color: #ddc237;
+    color: black!important;
+  }
+  .op-white{
+    color: white;
+  }
 </style>

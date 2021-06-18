@@ -204,7 +204,7 @@ export default {
           sale.delivery_price = this.delivery.price;
           sale.customer_id = customer.id;
           sale.email = customer.email;
-          this.$emit('confirm', sale);
+          this.$emit('confirm', sale, customer);
           this.customer = {};
           this.sale = {
             processPayment: false,
@@ -222,7 +222,7 @@ export default {
           sale.delivery_price = this.delivery.price;
           sale.customer_id = customer.id;
           sale.email = customer.email;
-          this.$emit('confirm', sale);
+          this.$emit('confirm', sale, customer);
           this.customer = {};
           this.sale = {
             processPayment: false,

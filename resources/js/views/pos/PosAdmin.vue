@@ -25,7 +25,7 @@
             <a href="#" class="list-group-item list-group-item-action" v-for="(item, productIndex) in products" :key="item.id">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <span class="lead">{{ item.name }} {{ item.sub_category.name }}</span>
+                  <span class="lead">{{ item.name }} </span>
                   <br>
                   <span>{{ item.category.name }}</span>
                   <br>
@@ -85,9 +85,10 @@
           </div>
           <ul class="list-group list-group-flush">
             <a href="#" class="list-group-item list-group-item-action" @click.prevent="addProduct(item)" v-for="item in productsPane" :key="item.id">
-              <span class="lead">{{ item.name }} {{ item.sub_category.name }}</span>
-              <br>
-              <span>{{ item.category.name }}</span>
+              <span class="lead">
+                <img style="height: 5vh; margin-right: 10px; border-radius: 10px;" :src="`/api/products/${item.image_url}`" alt=""/>
+                {{ item.name }} - {{ item.category.name }}
+              </span>
             </a>
           </ul>
         </div>
@@ -137,7 +138,7 @@ export default {
         product.picked.push(inventory);
       }
     },
-    submit(sale) {
+    submit(sale, customer) {
       var inventories = [];
       this.products.forEach(item => {
         inventories.push(...this.checkInventory(item));
@@ -147,10 +148,14 @@ export default {
         axios.post('sales', { sale, inventories, email: sale.email, processPayment: sale.processPayment }).then(res => {
           console.log(res);
           this.$loading(false);
-          this.$snotify.success('Venta registrada correctamente');
+          this.$snotify.success('Venta registrada correctamente 2');
           this.productsPane = [];
           this.removeAllProducts();
-        }).catch(error => {
+          let sale = res.data.sale;
+          console.log(customer);
+          console.log(sale);
+          location.replace(`https://wa.me/51${customer.mobile}?text=Hola,%20le%20envio%20los%20detalles%20de%20su%20compra%20en%20YOPO.PE%20:%yopo.pe/${sale.id}/checkoutDetails`);
+          }).catch(error => {
           this.productsPane = [];
           console.log(error.response);
         });

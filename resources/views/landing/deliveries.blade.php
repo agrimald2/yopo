@@ -2,7 +2,7 @@
     <div class="rectangle">
         ZONAS DE REPARTO
     </div>
-    <img src="images/yellow_circle.png" alt="">
+    <img src="images/yellow_circle.png" alt="Logo Yopo">
     <div class="row h50 map">
         <div class="container-map">
             <iframe src="https://www.google.com/maps/d/u/0/embed?mid=10z5te7lB1Cw-EOw8xh1Ryz9YdmlHT16a" width="640" height="480"></iframe>

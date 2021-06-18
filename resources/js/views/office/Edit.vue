@@ -12,6 +12,12 @@
               <input type="text" v-model="office.name" class="form-control" placeholder="Nombre" required>
             </div>
           </div>
+          <div class="row form-group">
+            <div class="col">
+              <label for="">Desactivar Tienda Por HOY</label>
+              <toggle-button v-model="office.disabled"></toggle-button>
+            </div>
+          </div>
           <div class="row">
             <div class="col">
               <button type="submit" class="btn btn-info float-right">

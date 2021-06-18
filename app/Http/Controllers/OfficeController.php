@@ -18,6 +18,11 @@ class OfficeController extends Controller
         return ['offices' => $offices];
     }
 
+    public function landing()
+    {
+        $offices = Office::all();
+        return view('landing', compact('offices'));
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -84,9 +84,8 @@ Route::get('/api/categories/images/{id}', 'CategoryController@getImage');
 
 Route::post('/api/logout', 'Auth\LoginController@logout');
 
-Route::get('/', function () {
-    return view('landing');
-});
+Route::get('/', 'OfficeController@landing');
+
 
 Route::get('/store', function () {
     return view('store');

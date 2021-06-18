@@ -48,7 +48,10 @@ export default {
   },
   data() {
     return {
+      priviewImage: {},
       category: {},
+      srcTmp: null,
+      file: null,
     }
   },
   computed: {

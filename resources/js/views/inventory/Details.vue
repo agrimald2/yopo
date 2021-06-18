@@ -9,8 +9,8 @@
         <div class="card-body">
           <table class="table">
             <thead>
-              <th>Materia prima</th>
-              <th>Peso</th>
+              <!--<th>Materia prima</th>-->
+              <th>#</th>
               <th>Codigo</th>
               <th>Vendido</th>
               <th>Entrega</th>
@@ -19,13 +19,13 @@
             </thead>
             <tbody>
               <tr v-for='(item, index) in product.inventory_all' :key="index">
-                <td>{{ item.raw_material_id ? item.raw_material_id : 'NO' }} </td>
-                <td>{{ item.weight.toFixed(3) }}</td>
+                <!--<td>{{ item.raw_material_id ? item.raw_material_id : 'NO' }} </td>-->
+                <td>{{ item.weight }}</td>
                 <td>{{ item.codigo }}</td>
                 <td v-if="item.sale_id">Si</td>
                 <td v-else>No</td>
-                <td v-if="item.delivered_date">Si</td>
-                <td v-else>No</td>
+                <td v-if="(item.delivered_date>=0) || (item.deliver_date == null)">No</td>
+                <td v-else>Si</td>
                 <td>{{ formatDate(item.created_at) }}</td>
                 <td>
                   <div class="btn-toolbar">
@@ -62,8 +62,8 @@
             <span>{{ product.sub_category.name }}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
-            <span>Peso Total:</span>
-            <span>{{ product.inventory.map(e => e.weight).reduce((a, b) => a + b, 0).toFixed(3) }} Kg</span>
+            <span>Restante:</span>
+            <span>{{ product.inventory.map(e => e.weight).reduce((a, b) => a + b, 0).toFixed(3) }} {{product.unit_code}}</span>
           </li>
         </ul>
       </div>

@@ -2,17 +2,16 @@
 <div id="card-product">
   <div class="row top-y">
     <div class="col-6">
-      <h3>
+    </div>
+    <div class="col-6">
+      <h3 style=" position: absolute; right: 0;">
         {{ product.name }}
       </h3>
     </div>
   </div>
   <div class="row sub-y">
     <div class="product_card row" style="width:100%;height:100%">
-      <div class="col-8">
-        <img :src="src" :alt="product.name">
-      </div>
-      <div class="col-4" style="justify-content: center; align-items: center; display: flex;">
+      <div class="col-4" style="padding-left: 0px;padding-right: 5px; justify-content: center; align-items: center; display: flex;">
         <div class="product_info">
           <h1>
             S/ {{ product.sale_price.toFixed(2) }}
@@ -43,6 +42,10 @@
           </div>
         </div>
       </div>
+      <div class="col-8">
+        <img :src="src" :alt="product.name">
+      </div>
+
     </div>
   </div>
 </div>
@@ -163,8 +166,8 @@ hr{
     background-color: #7f670e;
 }
 .col-8{
-  padding: 0;
   display: flex;
+  padding: 0;
 }
 .col-8 img{
   width: 100%;

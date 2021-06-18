@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <link href='./images/black_circle.png' rel="icon" Atype="image/x-icon" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,6 +29,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/store.css') }}" rel="stylesheet">
     
+    <script src="https://kit.fontawesome.com/2fcf075a91.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <div id="app">

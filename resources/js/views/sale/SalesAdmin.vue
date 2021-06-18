@@ -106,6 +106,7 @@
                       <router-link :to="{ path: `/sales/${item.id}/edit` }" class="dropdown-item">Editar</router-link>
                       <a href="#" class="dropdown-item" data-toggle="modal" data-target="#paymentSaleModal" @click.prevent="sale = item">Marcar Pago</a>
                       <a href="#" class="dropdown-item" @click.prevent="deliverSale(item)">Enviar a despacho</a>
+                      <a :href="`https://wa.me/51${item.customer.mobile}?text=Hola, te envio los detalles de mi compra http://127.0.0.1:8000//${item.id}/checkout`" target="_blank" class="dropdown-item">Enviar WhatsApp</a>
                       <!-- <a href="#" class="dropdown-item" @click.prevent="deliveredSale(item)">Marcar Entrega</a> -->
                       <a href="#" class="dropdown-item" data-toggle="modal" data-target="#deleteModal" @click.prevent="sale = item">Anular</a>                    </div>
                   </div>

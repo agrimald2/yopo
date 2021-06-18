@@ -49,12 +49,14 @@
 import Categories from '@/components/Categories'
 import ShoppingCard from '@/components/ShoppingCard'
 import ProductCard from '@/components/ProductCard'
+import ProductCard2 from '@/components/ProductCard2'
 
 export default {
   components: {
     Categories,
     ShoppingCard,
     ProductCard,
+    ProductCard2,
   },
   mounted() {
     this.fetchData();

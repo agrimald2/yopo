@@ -6,7 +6,7 @@ export const modules = {
       { label: 'Dashboard', name: 'dashboard', path: '/dashboard', icon: 'pie-chart' },
       //{ label: 'Punto de Venta', name: 'pos', path: '/pos', icon: 'monitor' },
       { label: 'Punto de Venta', name: 'posAdmin', path: '/posAdmin', icon: 'monitor' },
-      { label: 'Materia Prima', name: 'rawMaterial', path: '/rawMaterial', icon: 'archive' },
+      //{ label: 'Materia Prima', name: 'rawMaterial', path: '/rawMaterial', icon: 'archive' },
       { label: 'Productos', name: 'products', path: '/products', icon: 'package' },
       { label: 'Categorias', name: 'categories', path: '/categories', icon: 'package' },
       { label: 'Sub Categorias', name: 'subCategories', path: '/subCategories', icon: 'package' },

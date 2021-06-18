@@ -1,6 +1,6 @@
 <!--HEADER-->
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
+  <!--<nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
     <div class="container">
       <button type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
         <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,8 @@
         </ul>
       </router-link>
     </div>
-  </nav>
+  </nav>-->
+  <div></div>
 </template>
 
 <script>
