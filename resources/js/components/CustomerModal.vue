@@ -31,9 +31,9 @@
         <div class="form-group">
           <input type="text" v-model="customer.reference" class="form-control" placeholder="Referencia de la direccion" required>
         </div>
-        <div class="form-group">
+        <!--div class="form-group">
           <input type="text" v-model="observations" class="form-control" placeholder="Alguna observación">
-        </div>
+        </div-->
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-dark" style="color:white">
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   mounted() {
     this.fecthData();
@@ -57,10 +58,23 @@ export default {
       customer: {},
     }
   },
+  // nuevo
+  computed: {
+    ...mapGetters({
+      sale: 'sale/getSale',
+      products: 'sale/products',
+      totalProducts: 'sale/totalProducts',
+    }),
+  },
+  // nuevo
   methods: {
+    ...mapActions({
+      removeAllProducts: 'sale/removeAllProducts',
+      removeProduct: 'sale/removeProduct',
+    }),
     fecthData() {
       axios.get('deliveries').then(res => {
-        console.log(res);
+        //console.log(res);
         this.deliveries = res.data.deliveries;
       });
     },
@@ -79,18 +93,50 @@ export default {
     },
     
     submit() {
-      $('.modal').modal('hide');
-      this.$loading(true);
-      axios.post('customers', { customer: this.customer }).then(res => {
-        console.log(res);
+      // nuevo
+      let inventories = [];
+      this.products.forEach(item => {
+        inventories.push(...this.checkInventory(item));
+      });
+      // nuevo
+
+      for (var i = inventories.length - 1; i >= 0; i--) {
+        console.log(inventories[i]['codigo']);
+      }
+
+      /*$('.modal').modal('hide');
+      this.$loading(true);*/
+      axios.post('customers', { 
+        customer: this.customer,
+        customerid: this.customer.id,
+        
+        deliveryid: this.delivery.id,
+        deliveryprice: this.delivery.price,
+        
+        invent: inventories,
+      
+      }).then(res => {
+        
+        console.log(res.config.data);
+        //console.log(res.data.saleid);
+        //console.log(res);
+        
         var customer = res.data.customer;
         var sale = {};
         sale.customer_id = customer.id,
         sale.delivery_id = this.delivery.id;
         sale.delivery_price = this.delivery.price;
         sale.email = customer.email;
+        //$('.modal').modal('hide');
         // this.$loading(false);
-        this.$emit('confirm', sale);
+        //this.$emit('confirm', sale);
+        axios.get('shoppings/removeAll').catch(err => {
+          console.log(err.response);
+        });
+        this.removeAllProducts();
+        //this.$router.push({name:"store"}) // nuevo
+        window.location.href = "https://api.whatsapp.com/send/?phone="+"51934094501"+"&text=Hola%2C+este+es+mi+pedido%3A%0Ayopo.test%2F"+res.data.saleid+"%2FcheckoutDetails%0AQuedo+a+la+espera+de+su+confirmaci%C3%B3n&app_absent=0";
+        
       }).catch(err => {
         console.log(err.response);
       });

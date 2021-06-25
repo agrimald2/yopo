@@ -20,7 +20,19 @@
         @endif
     </div>
     <div class="row d-none d-md-block"> <!-- desktop -->
-        <h1>Desktop</h1>
+        @include('landing.desktop.portada')
+        @include('landing.desktop.deliveries')
+        @include('landing.desktop.carta')
+        <!--@include('landing.desktop.nav')-->
+        
+        <!--REVISAR SI LA TIENDA ESTÁ ACTIVA O NO-->
+        @if ($offices[0]->disabled == '0')
+                <div class="row" id="available">
+                    <p>Hola! En este momento <span style="color: red;"> no estamos disponibles.</span>
+                        Pero te invitamos a conocer nuestro catalogo!
+                    </p>
+                </div>
+        @endif
     </div>
     </body>
 </html>

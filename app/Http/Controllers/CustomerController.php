@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use App\Reniec;
+use App\Inventory;
+use App\Sale;
+use DateTime;
+use App\User;
+use App;
 
 use Illuminate\Http\Request;
 
@@ -72,6 +78,59 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+
+        // nuevo
+        $inventories = $request->invent;
+        $customers = $request->customer;
+        
+        $ids = collect($inventories)->map(function($item) {
+            return $item['id'];
+        });
+        
+        $inventories = Inventory::whereIn('id', $ids)->with('product')->get();
+        
+        $check = $inventories->search(function($item, $key) {
+            return $item->sale_id != NULL;
+        });
+
+        
+        $sale = new Sale();
+        $sale->customer_id = $request->customerid;
+        //$sale->office_id = $request->officeid;
+        $sale->channel = "TIENDA VIRTUAL";
+        $sale->on_model = "otros";
+        $sale->dispatched_date = NULL;
+        $sale->delivery_date = now();
+        $sale->deliver_date = NULL;
+        
+        $sale->delivery_id = $request->deliveryid;
+        //$sale->deliveryman_id = 0;
+        $sale->delivery_price = $request->deliveryprice;
+        
+        $sale->delivery_time = (new DateTime())->format('H:i:s');
+        
+
+        if ($check == false) {
+            $sale->user_id = Auth::id();
+            $sale->save();
+
+            foreach ($inventories as $inventory) {
+                $result = new Inventory([
+                    'product_id'=>$inventory->product_id,
+                    'office_id'=>$inventory->office_id,
+                    'user_id'=>$inventory->user_id,
+                    'codigo'=>$inventory->codigo,
+                    'weight'=>$inventory->weight,
+                    'sale_id'=>$sale->id,
+                    'raw_material_id'=>$inventory->raw_material_id,
+                    'dispatched_date'=>$inventory->dispatched_date,
+                    'delivered_date'=>$inventory->delivered_date,
+                    'sale_price'=>$inventory->sale_price]);
+                $result->save();
+            }
+        }
+        // nuevo
+
         $doc = $request->customer;
         $customer = Customer::where('document', $doc['document'])->first();
         if ($customer) {
@@ -80,8 +139,10 @@ class CustomerController extends Controller
             $customer = new Customer($request->customer);
         }
         $customer->save();
-        return ['customer' => $customer];
+        return ['customer' => $customer, 'saleid' => $sale->id];
     }
+
+
 
     /**
      * Display the specified resource.
