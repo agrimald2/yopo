@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=~/
+    - /bin/cp -r * $DEPLOYPATH
+    - /bin/cp -r ./public/* $DEPLOYPATH/public_html/
+    - /bin/rm -Rf $DEPLOYPATH/public
