@@ -48,7 +48,7 @@ class SaleController extends Controller
         $query = Sale::withTrashed()
             ->with('customer', 'items', 'delivery', 'deliveryman')
             ->whereBetween('created_at', [$sd, $ed]);
-        /*if ($request->payed == 'true') {
+        if ($request->payed == 'true') {
             $query->whereNotNull('payment_id');
         }
         if ($request->payed == 'false') {
@@ -65,13 +65,13 @@ class SaleController extends Controller
         }
         if ($request->deleted == 'false') {
             $query->whereNull('deleted_at');
-        }*/
+        }
 
         $sales = $query->orderBy('delivered_date');
         $sales = $query->orderBy('deliver_date','desc');
         $sales = $query->orderBy('payment_id');
         
-        $sales = $query->paginate(50);
+        $sales = $query->paginate(18);
         return [
             'sales' => $sales->items(),
             'count' => $sales->total(),

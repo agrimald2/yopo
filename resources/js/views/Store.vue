@@ -45,7 +45,7 @@
     </a>
   
     <div class="products_container">
-      <div class="product_container" v-for="item in filterProducts" :key="item.id">
+      <div class="product_container row" v-for="item in filterProducts" :key="item.id">
         <product-card v-if="item.id%2 == 0" :product="item"/>
         <product-card2 v-else :product="item"/>
       </div>
@@ -345,7 +345,7 @@ export default {
 }
 .product_container{
     width: 100vw;
-    height: 36vh;
+    height: 100%;
     margin-bottom: 2vh;
 }
   @media only screen and (min-width: 500px) {

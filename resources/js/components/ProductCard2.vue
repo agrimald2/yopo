@@ -1,10 +1,10 @@
 <template>
 <div id="card-product">
   <div class="row top-y">
-    <div class="col-6">
+    <div class="col-4">
     </div>
-    <div class="col-6">
-      <h3 style=" position: absolute; right: 0;">
+    <div class="col-8">
+      <h3 style="position: relative; right: 0;">
         {{ product.name }}
       </h3>
     </div>
@@ -26,14 +26,14 @@
                   {{ localProduct.counter || 0 }}
                 </div>
             </div> 
-            <button @click="plusP(localProduct); $forceUpdate()" class="col-3 btn_maths">
-              <span>
-                <i class="fas fa-plus-square" style="color: #ddc237;"></i>
-              </span>
-            </button> 
             <button @click="minusP(localProduct); $forceUpdate()" class="col-3 btn_maths" style="color: #ddc237;">
               <span>
                 <i class="fas fa-minus-square"></i>
+              </span>
+            </button> 
+            <button @click="plusP(localProduct); $forceUpdate()" class="col-3 btn_maths">
+              <span>
+                <i class="fas fa-plus-square" style="color: #ddc237;"></i>
               </span>
             </button> 
           </div>
@@ -137,7 +137,7 @@ export default {
   padding-bottom: 0px;
 }
 i{
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 .btn_add{
   font-size: 0.85rem;
@@ -148,13 +148,14 @@ i{
   font-family: EATHOMASANS;
 }
 p{
-    color: #ddc237;
-    font-size: 0.40rem;
+    color: white;
+    font-size: 0.45rem;
     text-align: center;
     font-family: 'EATHOMASANS';
     padding-left: 7px;
     padding-right: 7px;
     margin-bottom: 0;
+    font-weight: bolder;
 }
 hr{
     margin-top: 0.5rem;
@@ -166,11 +167,12 @@ hr{
     background-color: #7f670e;
 }
 .col-8{
-  display: flex;
+  /*display: flex;*/
   padding: 0;
 }
 .col-8 img{
   width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 .col-4{
@@ -205,7 +207,6 @@ h3{
 }
 .sub-y{
   width: 100%;
-  height: 80%;
   background-color: #b69816;
 }
 .sub-y .product_card{
