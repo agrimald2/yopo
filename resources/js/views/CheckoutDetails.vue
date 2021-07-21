@@ -19,23 +19,22 @@
         </div>
         <div class="row container_list">
           <div class="row" v-for='item in products' :key="item.id">
-            <div class="col-7">
+            <div class="col-8">
               <img style="width: 10vw;" :src="`/api/products/${item.product.image_url}`" alt=""/>
-               &nbsp &nbsp
-               {{item.product.name}} &nbsp
-              <div class="btn counter">
-               {{ item.totalWeight }}
-              </div>
+               &nbsp
+                  <span style="color:white">{{ item.totalWeight }}</span>
+                &nbsp
+               {{item.product.name}}
             </div>
-            <div class="col-5 row">
-              <div class="col-6" style="padding-left: 1px;padding-right: 1px;">
+            <div class="col-3 row">
+              <div class="col-12" style="padding-left: 1px;padding-right: 1px;">
                  S/ {{ item.sale_price.toFixed(2) }}
               </div>
-              <div class="col-6" style="padding-left: 1px;padding-right: 1px;">
+              <!--<div class="col-6" style="padding-left: 1px;padding-right: 1px;">
                 <span >
                   S/ {{ (item.totalWeight * item.sale_price).toFixed(2) }}
                 </span>
-              </div>
+              </div>-->
             </div>            
           </div>
         </div>
@@ -65,6 +64,33 @@
           ¡GRACIAS POR TU COMPRA!
         </h4>
       </div>
+      
+      <div class="row" style="justify-content: center;">
+        <div class="row" style="width:100vw; justify-content: center;">
+          <input style=" width: 30%; font-family: 'EathomaSans'; text-align: center;" type="tel" v-model="clave" name="code" id="code">
+        </div>
+        <br>
+        <br>
+        <div v-if="clave == '2021'" class="row"  style="margin-top: 2vh;">
+          <div class="col-6">        
+            <a :href="
+            'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0AHemos%20confirmado%20tu%20pedido%2C%20a%20continuación%20te%20indicamos%20nuestro%20métodos%20de%20pago%20y%20la%20opción%20de%20pagar%20por%20medio%20de%20nuestra%20plataforma%20virtual%3A%0Ahttp%3A%2F%2F192.168.18.39%3A8000%2F'+sale.id+'%2Fcheckout'">
+            <div class="btn btn-success">
+                <i class="fas fa-check"></i>
+            </div>
+           </a>
+          </div>
+          <div class="col-6">
+            <a :href="
+            'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0ALo%20Sentimos,%20no%20pudimos%20confirmar%20tu%20pedido'">
+              <div class="btn btn-danger">
+                  <i class="fas fa-times"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
         <img src="@/assets/img/left_esquina.png" alt="" id="left_esquina">
         <img src="@/assets/img/right_esquina.png" alt="" id="right_esquina">
     </div>
@@ -136,6 +162,7 @@ export default {
       products: [],
       items: [],
       groupitems: [],
+      clave: '',
     }
   },
   computed: {

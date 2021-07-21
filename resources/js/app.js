@@ -12,6 +12,8 @@ import ToggleButton from '@/components/ToggleButton'
 import VueLoading from 'vuejs-loading-plugin'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
+import VueCarousel from 'vue-carousel';
+
 
 const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
@@ -24,13 +26,15 @@ Vue.component('toggle-button', ToggleButton);
 Vue.use(VueLoading);
 Vue.use(Snotify, { toast: { timeout: 4000 } });
 Vue.use(VueMoment, {moment})
+Vue.use(VueCarousel);
+
 
 Vue.mixin({
     data() {
         return {
             unitCodes: [
-                { unitCode: 'KGM', name: 'KILOGRAMOS' },
                 { unitCode: 'NIU', name: 'UNIDADES' },
+                { unitCode: 'KGM', name: 'KILOGRAMOS' },
                 { unitCode: 'BG', name: 'BOLSAS' },
                 { unitCode: 'BO', name: 'BOTELLAS' },
                 { unitCode: 'BX', name: 'CAJAS' },

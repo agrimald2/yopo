@@ -55,6 +55,10 @@
   </div>
 </template>
 <style scoped>
+  .card-img-top{
+    height: 20vh;
+    width: auto;
+  }
   img {
     justify-content: center;
     text-align: center;

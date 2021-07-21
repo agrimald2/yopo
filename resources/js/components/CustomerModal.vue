@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   mounted() {
     this.fecthData();
@@ -55,7 +57,14 @@ export default {
       delivery: null,
       deliveries: [],
       customer: {},
+      observations:'',
     }
+  },
+   computed: {
+    ...mapGetters({
+      products: 'sale/products',
+      totalProducts: 'sale/totalProducts',
+    }),
   },
   methods: {
     fecthData() {
@@ -90,13 +99,33 @@ export default {
         sale.delivery_price = this.delivery.price;
         sale.email = customer.email;
         // this.$loading(false);
-        this.$emit('confirm', sale);
-      }).catch(err => {
-        console.log(err.response);
-      });
+        //this.$emit('confirm', sale);
+        let inventories = [];
+        this.products.forEach(item => {
+          inventories.push(...this.checkInventory(item));
+        });
+        axios.post('/sales/shop', {
+          inventories, 
+          sale: sale,
+        }).then(res => { 
+          console.log("axios.post('/sales/shop') =>",res);
+          this.loading = 2;
+          var id = res.data.sale.id;
+          console.log(res.data.sale.id);
+          window.location.href="https://api.whatsapp.com/send?phone=51934094501&text=Hola!%20Le%20envío%20los%20datos%20de%20mi%20pedido%3A%20%0Ahttp%3A%2F%2F192.168.18.39%3A8000%2F"+id+"%2FcheckoutDetails%0AQueda%20a%20la%20espera."
+        }).catch(error => {
+              this.loading = false;
+              this.loading = 3;
+              setTimeout(() => {
+                this.loading = null; 
+                this.$emit('error', error.response);
+              }, 3000);
+              console.log(error.response);
+            });
+          }).catch(err => {
+            console.log(err.response);
+          });      
     }
-    
-   
   }
 }
 </script>

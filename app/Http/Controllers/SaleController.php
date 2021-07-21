@@ -275,7 +275,7 @@ class SaleController extends Controller
     public function shop(Request $request)
     {
         // return $request;
-        $payment_method_id = $request->paymentMethodId;
+        /*$payment_method_id = $request->paymentMethodId;
         $transaction_amount = $request->transactionAmount;
         $description = $request->description;
         $installments = $request->installments;
@@ -283,7 +283,7 @@ class SaleController extends Controller
         $first_name = $request->cardholderName;
         $doc_type = $request->docType;
         $doc_number = $request->docNumber;
-        $token = $request->token;
+        $token = $request->token;*/
         
         $inventories = $request->inventories;
         
@@ -301,7 +301,7 @@ class SaleController extends Controller
             return response(['message' => 'Revise la disponibilidad del inventario'], 400);
         }
 
-        try {
+       /* try {
             $mercadopago_payment = $this->checkout(
                 $payment_method_id, 
                 $transaction_amount, 
@@ -314,14 +314,14 @@ class SaleController extends Controller
             );
         } catch (\Throwable $th) {
             return response(['message' => 'Favor de revisar la información de la tarjeta'], 400);
-        }
+        }*/
 
         $sale = new Sale($request->sale);
-        $payment = new Payment();
+       /* $payment = new Payment();
         $payment->mercadopago_id = $mercadopago_payment->id;
         $payment->save();
-        $sale->payment_id = $payment->id;
-        $sale->deliver_date = (new DateTime())->format('Y-m-d H:i:s');
+        $sale->payment_id = $payment->id;*/
+        $sale->delivery_date = (new DateTime())->format('Y-m-d H:i:s');
         $sale->channel = "TIENDA VIRTUAL";
         $sale->save();
 
@@ -331,7 +331,7 @@ class SaleController extends Controller
             $inventory->save();
         }
 
-        try {
+        /*try {
             if (isSet($request->processPayment) && $request->processPayment == true) {
                 Mail::to($email)->send(new SaleNotifyPaymentCustomer(['id' => $sale->id]));
             } else {
@@ -340,7 +340,7 @@ class SaleController extends Controller
             Mail::to(env('MAIL_USERNAME'), 'contacto@delgordo.com.pe')->send(new SaleNotify(['id' => $sale->id]));
         } catch (\Throwable $th) {
             error_log('No se pudo enviar email');
-        }
+        }*/
 
         return ['sale' => $sale];
     }

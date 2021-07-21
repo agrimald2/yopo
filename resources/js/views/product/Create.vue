@@ -26,7 +26,7 @@
               <label for="">Sub Categoria</label>
               <select class="custom-select text-uppercase" v-model="product.sub_category_id" required>
                 <option :value="null" disabled selected>SELECCIONE UNA SUB CATEGORIA</option>
-                <option v-for="item in subCategories" :key="item.id" :value="item.id">{{ item.name }}</option>
+                <option selected v-for="item in subCategories" :key="item.id" :value="item.id">{{ item.name }}</option>
               </select>
             </div>
           </div>
@@ -34,7 +34,6 @@
             <div class="col">
               <label for="">Unidad</label>
               <select class="custom-select text-uppercase" v-model="product.unit_code" required>
-                <!-- <option :value="null" disabled selected>SELECCIONE UNA SUB CATEGORIA</option> -->
                 <option v-for="(item, index) in unitCodes" :key="index" :value="item.unitCode">{{ item.name }}</option>
               </select>
             </div>
@@ -91,7 +90,7 @@ export default {
       srcTmp: null,
       file: null,
       product: {
-        unit_code: 'KGM',
+        unit_code: 'NIU',
         category_id: null,
         sub_category_id: null,
       },

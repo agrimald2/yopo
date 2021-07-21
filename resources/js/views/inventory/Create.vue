@@ -13,13 +13,13 @@
             </button>
           </li>
           <li class="list-group-item d-flex justify-content-between" v-for="(item, index) in inventories" :key="index">
-            <div class="input-group mr-2">
+            <div class="input-group mr-2" style="visibility:hidden">
               <div class="input-group-prepend">
                 <div class="input-group-text">
                   Kilos
                 </div>
               </div>
-              <input type="number" v-model="item.weight" class="form-control" min="0" step="any" placeholder="Kilos" required>
+              <input type="number" v-model="item.weight" class="form-control" min="1" value="1" step="any" placeholder="Kilos" required>
             </div>
             <div class="input-group mr-2">
               <div class="input-group-prepend">
@@ -86,7 +86,7 @@ export default {
         sub_category: {},
       },
       inventory: {
-        weight: null,
+        weight: 1,
         quantity: 1
       },
       inventories: [],

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <checkout-modal description="YOPO.PE" :transaction-amount="totalProducts + (sale.delivery_price || 0)" :sale="sale" @confirm="successCheckout" @error="errorCheckout"/>
+  <!--<checkout-modal description="YOPO.PE" :transaction-amount="totalProducts + (sale.delivery_price || 0)" :sale="sale" @confirm="successCheckout" @error="errorCheckout"/>-->
   <customer-modal @confirm="submit"/>
   <div class="row d-sm-block d-md-none" style="background-color: #ddc237; min-height:100vh">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm fixed-top store_topbar">

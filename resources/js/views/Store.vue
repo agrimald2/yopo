@@ -23,12 +23,24 @@
       </router-link>
 
       <div class="category_selector row">
-        <div class="category_container row">
-          <div class="col-2" v-for="item in categories" :key="item.id">
+        <div class="category_container"> 
+          <!--<carousel :autoplay="true" :paginationEnabled="false" :perPage:="4">
+            <slide class="col-2" v-for="item in categories" :key="item.id"> 
               <a v-if="item.name==='FROZEN'" class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0" style="color:#5895D3">
                 <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
                 <span v-else>{{ item.name }}</span>
-            </a>
+              </a>
+              <a v-else class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0">
+                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
+                <span v-else>{{ item.name }}</span>
+              </a>
+            </slide>
+          </carousel>-->
+          <div class="" v-for="item in categories" :key="item.id">
+              <a v-if="item.name==='FROZEN'" class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0" style="color:#5895D3">
+                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
+                <span v-else>{{ item.name }}</span>
+              </a>
               <a v-else class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0">
                 <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
                 <span v-else>{{ item.name }}</span>
@@ -37,7 +49,6 @@
         </div>
       </div>    
     </nav>
-
 
 
     <a href="#" @click.prevent="category_id = null; page = 0">
@@ -106,6 +117,7 @@
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue-carousel';
 import Categories from '@/components/Categories'
 import ShoppingCard from '@/components/ShoppingCard'
 import ProductCard from '@/components/ProductCard'
@@ -120,6 +132,8 @@ export default {
     ProductCard,
     ProductCard2,
     PageNavigationStore,
+    Carousel,
+    Slide,
   },
   mounted() {
     var categoryId = this.$route.params.categoryId;
@@ -279,6 +293,7 @@ export default {
 </script>
 
 <style scoped>
+
 .row{
   margin: 0;
 }
@@ -318,10 +333,14 @@ export default {
 }
 .category_container{
     background-color: rgba(0, 0, 0, 0.44);
-    width: 100%;
+    width: 100vw;
     height: 100%;
     padding-bottom: 1.5%;
-    padding-top: 1.5%;
+    padding-top: 1.5%; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display:flex;
 }
 .category_selector a{
   color: #ddc237;

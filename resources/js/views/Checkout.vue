@@ -12,6 +12,7 @@
         <i class="fas fa-arrow-circle-left" style="position: absolute;color: #ddc237;left: 3vw;top: 1px;font-size: 2rem;"></i>
       </a>   
     </nav>
+
     <div class="negro"></div>
     <div class="top_cart">
         <div class="row">
