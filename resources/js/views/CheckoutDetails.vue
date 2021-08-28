@@ -8,7 +8,7 @@
       <router-link to="/store" class="d-flex align-items-center" style="color: black; font-size: 0.8rem; position:fixed; right:20vw">
         <img src="@/assets/img/black_circle.png" alt="">
       </router-link>   
-      <a href="https://wa.me/51934094501" class="" >
+      <a href="https://wa.me/51924649794" class="" >
         <i class="fas fa-arrow-circle-left" style="position: absolute;color: #ddc237;left: 3vw;top: 1px;font-size: 2rem;"></i>
       </a>   
     </nav>
@@ -74,7 +74,7 @@
         <div v-if="clave == '2021'" class="row"  style="margin-top: 2vh;">
           <div class="col-6">        
             <a :href="
-            'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0AHemos%20confirmado%20tu%20pedido%2C%20a%20continuación%20te%20indicamos%20nuestro%20métodos%20de%20pago%20y%20la%20opción%20de%20pagar%20por%20medio%20de%20nuestra%20plataforma%20virtual%3A%0Ahttp%3A%2F%2F192.168.18.39%3A8000%2F'+sale.id+'%2Fcheckout'">
+            'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0AHemos%20confirmado%20tu%20pedido%2C%20a%20continuación%20te%20indicamos%20nuestro%20métodos%20de%20pago%20y%20la%20opción%20de%20pagar%20por%20medio%20de%20nuestra%20plataforma%20virtual%3A%0Ahttp%3A%2F%2Fyopo.pe%2F'+sale.id+'%2Fcheckout'">
             <div class="btn btn-success">
                 <i class="fas fa-check"></i>
             </div>

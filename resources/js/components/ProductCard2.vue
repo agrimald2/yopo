@@ -20,8 +20,8 @@
           <p>
             {{ product.description }}
           </p>
-          <div class="row" style="text-align: center; display: flex; align-items: center; margin-top:5px">
-            <div class="col-4" style="color: black; font-family: EATHOMASANS; font-size:0.85rem">
+          <div class="row product_actions" style="text-align: center; display: flex; align-items: center; margin-top:5px">
+            <div class="col-4 pa_counter" style="color: black; font-family: EATHOMASANS; font-size:0.85rem">
                 <div class="btn counter">
                   {{ localProduct.counter || 0 }}
                 </div>
@@ -36,10 +36,11 @@
                 <i class="fas fa-plus-square" style="color: #ddc237;"></i>
               </span>
             </button> 
-          </div>
-          <div class="btn btn_add" @click="addP(localProduct); $forceUpdate()">
+            <div class="btn btn_add" @click="addP(localProduct); $forceUpdate()" style="width:100%">
             agregar
+            </div>
           </div>
+
         </div>
       </div>
       <div class="col-8">
@@ -219,6 +220,9 @@ h3{
   /*background-color: black;
   opacity: 65%;*/
   border-radius: 5px;
+  height:100%;
+  justify-content:center;
+  bottom:0;  
 }
 .product_info h1{
   font-family: EathomaSans;
@@ -227,4 +231,8 @@ h3{
 h1{
   color: #ddc237;
 }
+.pa_counter{
+color: black; font-family: EATHOMASANS; font-size:0.85rem 
+}
+
 </style>

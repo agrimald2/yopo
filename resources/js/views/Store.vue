@@ -9,7 +9,7 @@
         YOPO MENU 
       </span>
       <span v-else>
-        <a href="https://wa.me/51934094501?text=Hola,%20¿a%20que%20hora%20abriran?"><span style="color:black"> Tienda Cerrada </span> <i class="fab fa-whatsapp"  style="font-size: 1.6rem; color: black;"></i></a>
+        <a href="https://wa.me/51924649794?text=Hola,%20¿a%20que%20hora%20abriran?"><span style="color:black"> Tienda Cerrada </span> <i class="fab fa-whatsapp"  style="font-size: 1.6rem; color: black;"></i></a>
       </span>
       <router-link v-if="offices[0].disabled == 1" to="/shopping" class="d-flex align-items-center" style="color: black; font-size: 0.8rem; position:fixed; right:20vw">
         <!--<feather class="feather-lg mr-2" type="shopping-cart"/>-->
@@ -24,18 +24,6 @@
 
       <div class="category_selector row">
         <div class="category_container"> 
-          <!--<carousel :autoplay="true" :paginationEnabled="false" :perPage:="4">
-            <slide class="col-2" v-for="item in categories" :key="item.id"> 
-              <a v-if="item.name==='FROZEN'" class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0" style="color:#5895D3">
-                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
-                <span v-else>{{ item.name }}</span>
-              </a>
-              <a v-else class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0">
-                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
-                <span v-else>{{ item.name }}</span>
-              </a>
-            </slide>
-          </carousel>-->
           <div class="" v-for="item in categories" :key="item.id">
               <a v-if="item.name==='FROZEN'" class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0" style="color:#5895D3">
                 <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
@@ -66,35 +54,55 @@
   <div class="negro"></div>
   
   <div class="row d-none d-md-block">
-    <div class="col">
-       BUSCADOR 
-      <div class="container mb-4">
-        <div class="row">
-          <div class="col search-input">
-            <input type="text" v-model="key" class="form-control" placeholder="Buscar producto">
-          </div>
+    <div class="row top-store">
+      <div class="row top-title">
+        <div class="col-4">
+            
+        </div>
+        <div class="col-4 center-div">
+            <h4 v-if="offices[0].disabled == 1" style="font-family: EathomaSans;">
+              Nuestra Carta
+            </h4>
+            <h4 v-else style="font-family: EathomaSans;">
+              <a href="https://wa.me/51924649794?text=Hola,%20¿a%20que%20hora%20abriran?"><span style="color:black"> Tienda Cerrada </span> <i class="fab fa-whatsapp"  style="font-size: 1.6rem; color: black;"></i></a>
+            </h4>
+        </div>
+        <div class="col-4 center-div">
+          <router-link v-if="offices[0].disabled == 1" to="/shopping" class="carrito_link" style="color:white">
+            <h4 style="font-family: EathomaSans;">
+                {{ saleProducts.length }} <i class="fas fa-shopping-cart" style="1.2rem"></i> 
+            </h4>
+          </router-link>
+          <img src="images/yellow_circle.png" id="yopo_logo" alt="Logo Yopo">
         </div>
       </div>
-    
-      <div class="container">
-        <div class="row">
-          CATEGORIAS
-          <div class="col">
-            <categories v-model="category_id" @input="page = 0"/>
-          </div>
-          
-          <div class="col-10 col-xl-9">
-            <div class="row">
-              <div class="col-md-4 form-group" v-for="item in filterProducts" :key="item.id">
-                <product-card :product="item"/>
-              </div>
-            </div>
+      <div class="category_selector row center-div">
+        <div class="category_container col-6 center-div"> 
+          <div class="" v-for="item in categories" :key="item.id">
+              <a v-if="item.name==='FROZEN'" class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0" style="color:#5895D3">
+                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
+                <span v-else>{{ item.name }}</span>
+              </a>
+              <a v-else class="nav-link" href="#" @click.prevent="category_id = item.id; page = 0">
+                <span v-if="category_id == item.id" style="color:white!important">{{ item.name }}</span>
+                <span v-else>{{ item.name }}</span>
+              </a>
           </div>
         </div>
-        <page-navigation-store class="mb-5" v-model="computedPage" :pages="pages" :count="products.length" :items="filterProducts"/>
+        <div class="col-6 buscador">
+          <input type="search" v-model="key" class="form-control" placeholder="Buscar producto">
+        </div>
+      </div>
+    </div>
+    <div class="container row" style="padding-top:22vh;padding-bottom:5vh; justify-content:center">
+      <div class="col-md-5 form-group" v-for="item in filterProducts" :key="item.id" style="margin-top:5vh">
+        <product-card :product="item"/>
       </div>
     </div>
   </div>
+
+  
+  
   <div class="modal fade" id="checkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -113,6 +121,8 @@
       </div>
     </div>
   </div>
+
+
 </div>
 </template>
 
@@ -293,7 +303,13 @@ export default {
 </script>
 
 <style scoped>
-
+.center-div{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    /* justify-items: center; */
+    align-items: center;
+}     
 .row{
   margin: 0;
 }
@@ -371,7 +387,69 @@ export default {
     #menu{
         padding-top: 10vh;
     }
-}
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .top-store{
+      position:fixed;
+      background-color:black;
+      z-index:20;
+    }
+    .carrito_link{
+      color:white;
+    }
+    .carrito:link:hover{
+      color:black;
+      font-size:1.5rem;
+    }
+    /* width */
+    .category_container::-webkit-scrollbar {
+      height: 10px;
+      width: 5px;
+    }
+
+    /* Track */
+    .category_container::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey;   
+      border-radius: px;
+    }
+    
+    /* Handle */
+    .category_container::-webkit-scrollbar-thumb {
+      background: white; 
+      border-radius: 10px;
+      /*border: 1px solid black;*/
+    }
+
+    /* Handle on hover */
+    .category_container::-webkit-scrollbar-thumb:hover {
+      background: #ddc237; 
+    }
+    
+    #yopo_logo{ 
+      position: absolute;
+      top:-2.5vh;
+      right:2.5vh;
+      width: 10vh;
+      height: 10vh;
+    }
+    .negro{
+        display:none;
+    }
+    .top-store{
+      /*border: 1px solid white;*/
+      height: 22vh;
+    }
+    .top-title{
+      width:100vw;
+      height:5vh;
+      margin-top:5vh;
+      text-align:center;
+      background-color: #ddc237;
+    }
+    .buscador{
+    }
+  }
 
   #bestseller {
     background-color: black;

@@ -2,7 +2,7 @@
 <div id="card-product">
   <div class="row top-y">
     <div class="col-8">
-      <h3 style="position: relative;">
+      <h3 class="p-name" style="position: relative;">
         {{ product.name }}
       </h3>
     </div>
@@ -14,15 +14,15 @@
       </div>
       <div class="col-4" style="justify-content: center; align-items: center; display: flex;">
         <div class="product_info">
-          <h1>
+          <h1 class="p-price">
             S/ {{ product.sale_price.toFixed(2) }}
           </h1>
           <hr>
-          <p>
+          <p class="p-desc">
             {{ product.description }}
           </p>
-          <div class="row" style="text-align: center; display: flex; align-items: center; margin-top:5px">
-            <div class="col-4" style="color: black; font-family: EATHOMASANS; font-size:0.85rem">
+          <div class="row product_actions" style="text-align: center; display: flex; align-items: center; margin-top:5px">
+            <div class="col-4 pa_counter">
                 <div class="btn counter">
                   {{ localProduct.counter || 0 }}
                 </div>
@@ -37,11 +37,11 @@
                 <i class="fas fa-plus-square" style="color: #ddc237;"></i>
               </span>
             </button> 
+            <div class="btn btn_add" @click="addP(localProduct); $forceUpdate()" style="width:100%">
+              agregar
+            </div>
+          </div>
 
-          </div>
-          <div class="btn btn_add" @click="addP(localProduct); $forceUpdate()">
-            agregar
-          </div>
         </div>
       </div>
     </div>
@@ -216,6 +216,9 @@ h3{
   /*background-color: black;
   opacity: 65%;*/
   border-radius: 5px;
+  height:100%;
+  justify-content:center;
+  bottom:0;  
 }
 .product_info h1{
   font-family: EathomaSans;
@@ -223,5 +226,36 @@ h3{
 }
 h1{
   color: #ddc237;
+}
+.pa_counter{
+color: black; font-family: EATHOMASANS; font-size:0.85rem 
+}
+
+@media only screen and (min-width: 1200px) {
+  .p-name{
+    font-size: 1.4rem;
+  }
+  .p-desc{
+    font-size: 0.75rem;
+  }
+  .product_actions{
+    position:absolute;
+    bottom:0;
+    width:96%;
+    border-top: 3px solid white;
+    padding-top: 5px;
+  }
+  .product_info{
+    width:100%
+  }
+  i{
+    font-size: 2rem;
+  }
+  .pa_counter{
+    font-size:1rem;
+  }
+  .counter{
+    font-size:1.1rem;
+  }
 }
 </style>

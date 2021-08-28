@@ -8,7 +8,7 @@
       <router-link to="/shopping" class="d-flex align-items-center" style="color: black; font-size: 0.8rem; position:fixed; right:20vw">
         <img src="@/assets/img/black_circle.png" alt="">
       </router-link>   
-      <a href="https://wa.me/51934094501" class="" >
+      <a href="https://wa.me/51924649794" class="" >
         <i class="fas fa-arrow-circle-left" style="position: absolute;color: #ddc237;left: 3vw;top: 1px;font-size: 2rem;"></i>
       </a>   
     </nav>
@@ -80,11 +80,11 @@
       <div class="row" style="text-align: center;">
         <div class="col-4" style="padding: 10px; font-family: 'EATHOMASANS'; font-size: 0.75rem;">
           YAPE <br>
-          934094501
+          924649794
         </div>
         <div class="col-4" style="padding: 10px; font-family: 'EATHOMASANS'; font-size: 0.75rem;">
           PLIN <br>
-          934094501
+          924649794
         </div>
         <div class="col-4" style="align-items:center; display:flex;">
           <button type="button" class="btn" data-toggle="modal" data-target="#checkoutModal" v-if="!sale.payment_id" style="font-family: 'EATHOMASANS'; font-size: 0.65rem; border: 1px solid black; border-radius:5px">
