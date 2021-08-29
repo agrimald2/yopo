@@ -99,7 +99,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('category', 'subCategory', 'questions')->find($id);
+        $product = Product::with('category', 'subCategory', 'questions.options')->find($id);
         return ['product' => $product];
     }
 
