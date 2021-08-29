@@ -92,7 +92,8 @@ export default {
           product_id: this.product_id,
           question: input,
         })
-        .then(() => {
+        .then((res) => {
+          this.questions.push(res.data);
           this.loading = false;
         });
     },

@@ -15,7 +15,7 @@ class ProductQuestionController extends Controller
             'question' => 'required|string',
         ]);
 
-        return ProductQuestion::create($validated);
+        return ProductQuestion::create($validated)->load('options');
     }
 
 
