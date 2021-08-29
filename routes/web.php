@@ -35,10 +35,10 @@ Route::get('/api/products/{id}/inventoryAll', 'ProductController@inventoryAll');
 /**
  * Product questions
  */
-Route::post('/api/product/questions/add', 'ProductQuestionController@addQuestion');
-Route::post('/api/product/questions/remove', 'ProductQuestionController@removeQuestion');
-Route::post('/api/product/questions/options/add', 'ProductQuestionController@addOption');
-Route::post('/api/product/questions/options/remove', 'ProductQuestionController@removeOption');
+Route::post('/api/products/questions/add', 'ProductQuestionController@addQuestion');
+Route::post('/api/products/questions/remove', 'ProductQuestionController@removeQuestion');
+Route::post('/api/products/questions/options/add', 'ProductQuestionController@addOption');
+Route::post('/api/products/questions/options/remove', 'ProductQuestionController@removeOption');
 
 
 Route::get('/api/products/{key}/search', 'ProductController@search');
