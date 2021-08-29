@@ -57,7 +57,7 @@ import QuestionItem from "./QuestionItem.vue";
 import Loading from "./Loading.vue";
 
 export default {
-  props: ["product_id"],
+  props: ["product_id", "questions"],
 
   components: {
     QuestionItem,
@@ -71,24 +71,6 @@ export default {
         question: null,
         option: null,
       },
-      questions: [
-        {
-          question: "Selecciona un Refresco",
-          options: [
-            { option: "Manzanita" },
-            { option: "Coca Cola" },
-            { option: "Sprite" },
-          ],
-        },
-        {
-          question: "Selecciona una Salsa",
-          options: [
-            { option: "Verde" },
-            { option: "Roja" },
-            { option: "Tomate Picosa" },
-          ],
-        },
-      ],
     };
   },
 

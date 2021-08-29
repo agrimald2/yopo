@@ -79,7 +79,7 @@ class ProductController extends Controller
     public function storeImage(Request $request)
     {
         $image_url = $request->image_url;
-        if (isSet($image_url)) {
+        if (isset($image_url)) {
             Storage::delete($image_url);
         }
         $path = $request->file('image')->store('images');
@@ -99,15 +99,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with('category', 'subCategory')->find($id);
+        $product = Product::with('category', 'subCategory', 'questions')->find($id);
         return ['product' => $product];
     }
 
     public function inventoryAll($id)
     {
-        if(request('rm')){
+        if (request('rm')) {
             $product = Product::with('category', 'subCategory', 'inventory_rm')->find($id);
-        }else{
+        } else {
             $product = Product::with('category', 'subCategory', 'inventoryAll')->find($id);
         }
 
