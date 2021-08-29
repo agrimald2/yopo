@@ -41,7 +41,7 @@ class ProductQuestionController extends Controller
 
         $question->options->each->delete();
 
-        $question->delete();
+        return $question->delete();
     }
 
     public function removeOption(Request $request)

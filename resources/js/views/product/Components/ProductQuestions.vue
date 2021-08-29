@@ -112,23 +112,35 @@ export default {
     },
 
     deleteOption(done, question, option) {
-      setTimeout(() => {
-        question.options.splice(
-          question.options.findIndex((x) => x === option),
-          1
-        );
-        done();
-      }, 1000);
+      const url = "/products/questions/options/remove";
+
+      axios
+        .post(url, {
+          id: option.id,
+        })
+        .then((res) => {
+          question.options.splice(
+            question.options.findIndex((x) => x === option),
+            1
+          );
+          done();
+        });
     },
 
     deleteQuestion(done, question) {
-      setTimeout(() => {
-        this.questions.splice(
-          this.questions.findIndex((x) => x === question),
-          1
-        );
-        done();
-      }, 1000);
+      const url = "/products/questions/remove";
+
+      axios
+        .post(url, {
+          id: question.id,
+        })
+        .then((res) => {
+          this.questions.splice(
+            this.questions.findIndex((x) => x === question),
+            1
+          );
+          done();
+        });
     },
   },
 };
