@@ -45,7 +45,7 @@ class ShoppingController extends Controller
             'tmp_id' => session('tmp_id'),
         ])->first();
         if ($shopping) {
-            if (isSet($product['counter'])) {
+            if (isset($product['counter'])) {
                 $shopping->counter = $product['counter'];
             } else {
                 $shopping->counter = 1;

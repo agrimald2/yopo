@@ -56,27 +56,35 @@ export default {
     },
 
     submitProductToCart(options = {}) {
-      console.log("XXXXXXXXXXX", {
-        product_id: this.id,
-        qty: this.qty,
-        options,
-      });
+      const data = {
+        product: {
+          id: this.id,
+          counter: this.qty,
+          options,
+        },
+      };
 
+      axios.post("shoppings", data).then((res) => {
+        this.addToLocalCart();
+        this.showSuccessToast();
+        this.redirectToStore();
+      });
+    },
+
+    addToLocalCart() {
+      /**
+       * Todo: add product to vuex
+       */
+      //let doc = Object.assign({}, product);
+      //this.addProduct(doc);
+    },
+
+    showSuccessToast() {
       const icon = `https://image.flaticon.com/icons/png/128/117/117645.png?ga=GA1.2.247189466.1619654400`;
       const msg = `${this.qty} "${this.product.name}" al carrito!`;
       this.$snotify.warning(msg, null, {
         icon: icon,
       });
-      /**
-       * Todo:
-       * - Add to vuex (local cart)
-       * - Send to laravel (remote cart)
-       */
-      //let doc = Object.assign({}, product);
-      //this.addProduct(doc);
-      // axios.post("shoppings", { product: doc });
-
-      this.redirectToStore();
     },
 
     redirectToStore() {
