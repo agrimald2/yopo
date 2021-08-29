@@ -1,6 +1,9 @@
 <template>
   <div>
-    <modal :questions="product.questions" />
+    <modal
+      :product="product"
+      @added="onAdded"
+    />
   </div>
 </template>
 
@@ -25,6 +28,9 @@ export default {
     fetchData() {
       const url = `products/${this.id}`;
       axios.get(url).then((res) => (this.product = res.data.product));
+    },
+    onAdded(input) {
+      console.log(input);
     },
   },
 };
