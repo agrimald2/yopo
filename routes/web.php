@@ -96,11 +96,17 @@ Route::post('/api/logout', 'Auth\LoginController@logout');
 Route::get('/', 'OfficeController@landing');
 
 
-Route::get('/store', function () {
+
+
+Route::get('/store/{id}', function () {
     return view('store');
 });
 
-Route::get('/store/{id}', function () {
+Route::get('/storeProductAdd/{id}', function () {
+    return view('store');
+});
+
+Route::get('/store', function () {
     return view('store');
 });
 

@@ -65,6 +65,11 @@ const routes = [
     component: require('@/views/Shopping').default
   },
   {
+    path: '/storeProductAdd/:id',
+    name: 'store.product.add',
+    component: require('@/views/StoreProductAdd.vue').default
+  },
+  {
     path: '/store/:categoryId?',
     name: 'store',
     component: require('@/views/Store').default
