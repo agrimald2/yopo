@@ -102,13 +102,14 @@ export default {
 
     addQuestion(input) {
       this.loading = true;
-      setTimeout(() => {
-        this.questions.push({
+      const url = "/products/questions/add";
+      axios
+        .post(url, {
           question: input,
-          options: [],
+        })
+        .then(() => {
+          this.loading = false;
         });
-        this.loading = false;
-      }, 1000);
     },
 
     addOption(done, question, input) {
