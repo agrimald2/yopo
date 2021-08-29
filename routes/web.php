@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
-Route::get('/api/{officeId}/setOffice', function($officeId) {
+Route::get('/api/{officeId}/setOffice', function ($officeId) {
     session(['officeId' => $officeId]);
     return ['ok' => true];
 });
@@ -31,6 +31,15 @@ Route::get('/api/products/images/{id}', 'ProductController@getImage');
 Route::get('/api/customers/byDni', 'CustomerController@byDni');
 Route::get('/api/shoppings/removeAll', 'ShoppingController@removeAll');
 Route::get('/api/products/{id}/inventoryAll', 'ProductController@inventoryAll');
+
+/**
+ * Product questions
+ */
+Route::post('/api/product/questions/add', 'ProductQuestionController@addQuestion');
+Route::post('/api/product/questions/remove', 'ProductQuestionController@removeQuestion');
+Route::post('/api/product/questions/options/add', 'ProductQuestionController@addOption');
+Route::post('/api/product/questions/options/remove', 'ProductQuestionController@removeOption');
+
 
 Route::get('/api/products/{key}/search', 'ProductController@search');
 Route::get('/api/customers/{key}/search', 'CustomerController@search');

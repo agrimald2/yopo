@@ -11,7 +11,8 @@ class ProductQuestionController extends Controller
     public function addQuestion(Request $request)
     {
         $validated = $request->validate([
-            'question' => 'required|string'
+            'product_id' => 'required|numeric',
+            'question' => 'required|string',
         ]);
 
         return ProductQuestion::create($validated);
