@@ -154,7 +154,7 @@
     </form>
 
     <div class="bg-white rounded py-5 mx-4">
-      <product-questions />
+      <product-questions :product_id="$route.params.productId" />
     </div>
   </div>
 </template>

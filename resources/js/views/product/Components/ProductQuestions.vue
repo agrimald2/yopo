@@ -57,6 +57,8 @@ import QuestionItem from "./QuestionItem.vue";
 import Loading from "./Loading.vue";
 
 export default {
+  props: ["product_id"],
+
   components: {
     QuestionItem,
     Loading,
@@ -105,6 +107,7 @@ export default {
       const url = "/products/questions/add";
       axios
         .post(url, {
+          product_id: this.product_id,
           question: input,
         })
         .then(() => {
