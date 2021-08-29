@@ -40,8 +40,8 @@
 
     <div class="grid gap-8">
       <question-item
-        v-for="(question, key) in questions"
-        :key="key"
+        v-for="question in questions"
+        :key="question.id"
         :question="question"
         @option-add="addOption"
         @option-delete="deleteOption"
@@ -98,12 +98,17 @@ export default {
     },
 
     addOption(done, question, input) {
-      setTimeout(() => {
-        question.options.push({
+      const url = "/products/questions/options/add";
+
+      axios
+        .post(url, {
+          question_id: question.id,
           option: input,
+        })
+        .then((res) => {
+          question.options.push(res.data);
+          done();
         });
-        done();
-      }, 1000);
     },
 
     deleteOption(done, question, option) {
