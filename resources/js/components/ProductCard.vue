@@ -114,20 +114,12 @@ export default {
       minusProduct: "sale/minusProduct",
     }),
     addP(product) {
+      const qty = product.counter;
+      if (qty <= 0) return;
+
       this.$router.push({
         name: "store.product.add",
-        params: { id: product.id },
-      });
-      return;
-      let doc = Object.assign({}, product);
-      this.addProduct(doc);
-      const icon = `https://image.flaticon.com/icons/png/128/117/117645.png?ga=GA1.2.247189466.1619654400`;
-      this.$snotify.warning("Agregado", null, {
-        icon: icon,
-      });
-      product.counter = 0;
-      axios.post("shoppings", { product: doc }).catch((err) => {
-        console.log(err.response);
+        params: { id: product.id, qty },
       });
     },
     plusP(product) {

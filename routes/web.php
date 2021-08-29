@@ -102,7 +102,7 @@ Route::get('/store/{id}', function () {
     return view('store');
 });
 
-Route::get('/storeProductAdd/{id}', function () {
+Route::get('/storeProductAdd/{id}/{qty}', function () {
     return view('store');
 });
 

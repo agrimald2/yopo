@@ -65,7 +65,7 @@ const routes = [
     component: require('@/views/Shopping').default
   },
   {
-    path: '/storeProductAdd/:id',
+    path: '/storeProductAdd/:id/:qty',
     name: 'store.product.add',
     component: require('@/views/StoreProductAdd/StoreProductAdd.vue').default
   },
