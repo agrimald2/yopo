@@ -72,6 +72,14 @@ export default {
 
   methods: {
     onAddToCart() {
+      const isValid = this.product.questions.every((x) => {
+        return this.input.hasOwnProperty(x.question);
+      });
+
+      if (!isValid) {
+        return alert("Responde todas las preguntas, por favor");
+      }
+
       this.$emit("added", this.input);
     },
   },
