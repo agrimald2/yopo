@@ -330,7 +330,7 @@ class SaleController extends Controller
         foreach ($inventories as $inventory) {
             $inventory->sale_id = $sale->id;
             $inventory->sale_price = $inventory->product->sale_price;
-            collect($request->inventories)->forEach(function ($inventoryRequest) use ($inventory) {
+            collect($request->inventories)->each(function ($inventoryRequest) use ($inventory) {
                 if (isset($inventoryRequest['id']) && $inventoryRequest['id'] == $inventory->id) {
                     $inventory->options = isset($inventoryRequest['options']) ? $inventoryRequest['options'] : '';
                 }
