@@ -4,6 +4,7 @@
     id="shoppingModal"
     role="dialog"
   >
+    <BootstrapModalFix />
     <div class="modal-dialog">
       <form
         @submit.prevent="submit"
@@ -79,6 +80,7 @@
             <input
               type="text"
               v-model="customer.address"
+              ref="input"
               class="form-control"
               placeholder="Direccion de entrega"
               required
@@ -118,10 +120,28 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import BootstrapModalFix from "./BootstrapModalFix";
 
 export default {
   mounted() {
     this.fecthData();
+
+    const interval = setInterval(() => {
+      if (typeof google == "undefined") return;
+
+      this.googleAutocomplete(
+        this.$refs.input,
+        "PE",
+        [-12.1453041, -77.0561434],
+        0.15,
+        (address) => {
+          this.customer.address = address;
+          alert(address);
+        }
+      );
+
+      clearInterval(interval);
+    });
   },
   data() {
     return {
@@ -144,6 +164,35 @@ export default {
         this.deliveries = res.data.deliveries;
       });
     },
+
+    /**
+     * Google maps integration
+     */
+    googleAutocomplete(input, country, coords, radius = 0.15, callback = null) {
+      const center = { lat: coords[0], lng: coords[1] };
+
+      // Create a bounding box with sides 0.1 = ~10km away from the center point
+      const defaultBounds = {
+        north: center.lat + radius,
+        south: center.lat - radius,
+        east: center.lng + radius,
+        west: center.lng - radius,
+      };
+
+      const options = {
+        bounds: defaultBounds,
+        componentRestrictions: { country },
+        fields: ["address_components", "geometry", "icon", "name"],
+        strictBounds: false,
+        types: ["address"],
+      };
+      const autocomplete = new google.maps.places.Autocomplete(input, options);
+      if (callback) {
+        autocomplete.addListener("place_changed", () => callback(input.value));
+      }
+    },
+    /** GMAPS END */
+
     findCustomer() {
       if (this.customer.document.length == 8) {
         var params = {

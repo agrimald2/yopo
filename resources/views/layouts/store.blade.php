@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <script src="https://kit.fontawesome.com/2e9575839f.js" crossorigin="anonymous"></script>
 
+    <!-- Maps -->
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBp155A04-07WJmd4Pq1zTihfOzHGQ7Xvs&libraries=places"></script>
 
 </head>
 
