@@ -36,28 +36,29 @@ class ShoppingController extends Controller
      */
     public function store(Request $request)
     {
-        if (!session('tmp_id')) {
-            session(['tmp_id' => Str::random(10)]);
+        $sessionId = session('tmp_id');
+
+        if (!$sessionId) {
+            $sessionId = Str::random(10);
+            session(['tmp_id' => $sessionId]);
         }
+
         $product = $request->product;
-        $shopping = Shopping::where([
+
+        $counter = isset($product['counter']) ? $product['counter'] : 1;
+
+        $shopping = Shopping::firstOrCreate([
             'product_id' => $product['id'],
-            'tmp_id' => session('tmp_id'),
-        ])->first();
-        if ($shopping) {
-            if (isset($product['counter'])) {
-                $shopping->counter = $product['counter'];
-            } else {
-                $shopping->counter = 1;
-            }
-        } else {
-            $shopping = new Shopping([
-                'tmp_id' => session('tmp_id'),
-                'counter' => $product['counter'],
-                'product_id' => $product['id'],
-            ]);
-        }
+            'tmp_id' => $sessionId,
+            'options' => $product['options'],
+        ], [
+            'counter' => $counter,
+        ]);
+
+        $shopping->counter = $counter;
+
         $shopping->save();
+
         return ['shopping' => $shopping];
     }
 
