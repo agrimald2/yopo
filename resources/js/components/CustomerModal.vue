@@ -4,7 +4,9 @@
     id="shoppingModal"
     role="dialog"
   >
+    <!-- Make bootstrap modal z-indexes to 1 and 2 -->
     <BootstrapModalFix />
+    <!--  -->
     <div class="modal-dialog">
       <form
         @submit.prevent="submit"
