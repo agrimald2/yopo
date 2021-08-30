@@ -34,9 +34,10 @@ export default {
   },
   mounted() {
     this.fetchData().then((product) => {
-      this.loading = false;
       this.product = product;
-      if (product.questions.length === 0) {
+      if (product.questions.length > 0) {
+        this.loading = false;
+      } else {
         this.submitProductToCart();
       }
     });
@@ -52,7 +53,9 @@ export default {
     },
 
     onModalAdded(input) {
-      const options = Object.keys(input).map((key) => `${key}: ${input[key]}`);
+      const options = Object.keys(input)
+        .map((key) => `${key}: ${input[key]}`)
+        .join("\n");
       this.submitProductToCart(options);
     },
 
