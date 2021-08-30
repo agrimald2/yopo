@@ -68,9 +68,9 @@ class SaleController extends Controller
         }
 
         $sales = $query->orderBy('delivered_date');
-        $sales = $query->orderBy('deliver_date','desc');
+        $sales = $query->orderBy('deliver_date', 'desc');
         $sales = $query->orderBy('payment_id');
-        
+
         $sales = $query->paginate(18);
         return [
             'sales' => $sales->items(),
@@ -148,7 +148,8 @@ class SaleController extends Controller
         ];
     }
 
-    public function find(Request $request) {
+    public function find(Request $request)
+    {
         $key = $request->key;
         $customers = Customer::where('name', 'like', "{$key}%")
             ->orWhere('document', $key)
@@ -161,15 +162,16 @@ class SaleController extends Controller
         return ['sales' => $sales];
     }
 
-    public function pay(Request $request) {        
+    public function pay(Request $request)
+    {
         $sale = Sale::find($request->sale['id']);
 
-        $sale->payment_method_id = $request->sale['payment_method_id'];     
+        $sale->payment_method_id = $request->sale['payment_method_id'];
         $sale->payment_date = $request->sale['payment_date'];
-        $sale->payment_time = $request->sale['payment_time']; 
-        $sale->payment_id = $request->sale['payment_id']; 
-        
-        $sale->payment_autor = auth()->user()->name;    
+        $sale->payment_time = $request->sale['payment_time'];
+        $sale->payment_id = $request->sale['payment_id'];
+
+        $sale->payment_autor = auth()->user()->name;
         $sale->save();
         return ['ok' => true];
     }
@@ -202,12 +204,12 @@ class SaleController extends Controller
             $sale->payment_id = $payment->id;
         }
 
-        $ids = collect($request->inventories)->map(function($item) {
+        $ids = collect($request->inventories)->map(function ($item) {
             return $item['id'];
         });
         $inventories = Inventory::whereIn('id', $ids)->with('product')->get();
 
-        $check = $inventories->search(function($item, $key) {
+        $check = $inventories->search(function ($item, $key) {
             return $item->sale_id != NULL;
         });
         if ($check == false) {
@@ -216,6 +218,13 @@ class SaleController extends Controller
             foreach ($inventories as $inventory) {
                 $inventory->sale_id = $sale->id;
                 $inventory->sale_price = $inventory->product->sale_price;
+
+                collect($request->inventories)->forEach(function ($requestInventory) use ($inventory) {
+                    if ($requestInventory['id'] == $inventory->id) {
+                        $inventory->options = isset($requestInventory['options']) ? $requestInventory['options'] : '';
+                    }
+                });
+
                 $inventory->save();
             }
             try {
@@ -246,17 +255,17 @@ class SaleController extends Controller
         $doc_type = $request->docType;
         $doc_number = $request->docNumber;
         $token = $request->token;
-        
+
         try {
             $mercadopago_payment = $this->checkout(
-                $payment_method_id, 
-                $transaction_amount, 
+                $payment_method_id,
+                $transaction_amount,
                 $description,
                 $installments,
                 $doc_type,
                 $doc_number,
                 $email,
-                $token 
+                $token
             );
         } catch (\Throwable $th) {
             return response(['message' => 'Favor de revisar la información de la tarjeta'], 400);
@@ -284,16 +293,16 @@ class SaleController extends Controller
         $doc_type = $request->docType;
         $doc_number = $request->docNumber;
         $token = $request->token;*/
-        
+
         $inventories = $request->inventories;
-        
-        $ids = collect($inventories)->map(function($item) {
+
+        $ids = collect($inventories)->map(function ($item) {
             return $item['id'];
         });
-        
+
         $inventories = Inventory::whereIn('id', $ids)->with('product')->get();
-        
-        $check = $inventories->search(function($item, $key) {
+
+        $check = $inventories->search(function ($item, $key) {
             return $item->sale_id != NULL;
         });
 
@@ -301,23 +310,23 @@ class SaleController extends Controller
             return response(['message' => 'Revise la disponibilidad del inventario'], 400);
         }
 
-       /* try {
+        /* try {
             $mercadopago_payment = $this->checkout(
-                $payment_method_id, 
-                $transaction_amount, 
+                $payment_method_id,
+                $transaction_amount,
                 $description,
                 $installments,
                 $doc_type,
                 $doc_number,
                 $email,
-                $token 
+                $token
             );
         } catch (\Throwable $th) {
             return response(['message' => 'Favor de revisar la información de la tarjeta'], 400);
         }*/
 
         $sale = new Sale($request->sale);
-       /* $payment = new Payment();
+        /* $payment = new Payment();
         $payment->mercadopago_id = $mercadopago_payment->id;
         $payment->save();
         $sale->payment_id = $payment->id;*/
@@ -354,10 +363,10 @@ class SaleController extends Controller
     public function show($id)
     {
         $sale = Sale::with('customer', 'delivery', 'user', 'deliveryman')
-            ->with(['items' => function($query) {
+            ->with(['items' => function ($query) {
                 return $query->with('product');
             }])
-            ->with(['payment' => function($query) {
+            ->with(['payment' => function ($query) {
                 return $query->with('user');
             }])
             ->find($id);
@@ -375,7 +384,7 @@ class SaleController extends Controller
             $inventory = Inventory::find($item->id);
             $inventory->fill([
                 'delivered_date' => (new DateTime())->format('Y-m-d H:i:s'),
-            ]); 
+            ]);
             $inventory->save();
         }
         $sale->fill([
@@ -392,7 +401,7 @@ class SaleController extends Controller
             $inventory = Inventory::find($item->id);
             $inventory->fill([
                 'dispatched_date' => (new DateTime())->format('Y-m-d H:i:s'),
-            ]); 
+            ]);
             $inventory->save();
         }
         $sale->fill([
@@ -463,7 +472,7 @@ class SaleController extends Controller
             $inventory = Inventory::find($item->id);
             $inventory->fill([
                 'sale_id' => NULL,
-            ]); 
+            ]);
             $inventory->save();
         }
         $sale->fill($doc);
@@ -477,14 +486,14 @@ class SaleController extends Controller
     }
 
     private function checkout(
-        $payment_method_id, 
-        $transaction_amount, 
+        $payment_method_id,
+        $transaction_amount,
         $description,
         $installments,
         $doc_type,
         $doc_number,
         $email,
-        $token 
+        $token
     ) {
         error_log('======');
         error_log($payment_method_id);
@@ -539,19 +548,18 @@ class SaleController extends Controller
             $statusDetail = $payment->status_detail;
             error_log(" === $status === ");
             error_log($statusDetail);
-            
+
             if (empty($status) && empty($statusDetail)) {
                 throw new Exception('Tarjeta declinada');
             }
 
-            if($status == self::APPROVED || $status == self::IN_PROCESS || $status == self::PENDING) {
+            if ($status == self::APPROVED || $status == self::IN_PROCESS || $status == self::PENDING) {
                 return $payment;
             } else if ($status == self::REJECTED) {
                 throw new Exception($this->_errorMP($statusDetail));
             }
-
         } catch (\Throwable $th) {
-            error_log('Error: '.$e->getMessage().' - Line:' .$e->getLine() . ' - Archivo: ' . $e->getFile());
+            error_log('Error: ' . $e->getMessage() . ' - Line:' . $e->getLine() . ' - Archivo: ' . $e->getFile());
             throw $th;
         }
     }
@@ -611,7 +619,7 @@ class SaleController extends Controller
 
             case "pending_waiting_payment":
                 $msg = "Pago pendiente.";
-            break;
+                break;
 
             case "no_stock":
                 $msg = "Ya no hay producto en stock.";
