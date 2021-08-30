@@ -19,6 +19,7 @@ class Inventory extends Model
         'sale_price',
         'dispatched_date',
         'delivered_date',
+        'options',
     ];
 
     // protected $attributes = [
@@ -26,21 +27,22 @@ class Inventory extends Model
     // ];
 
     protected $casts = [
-      'sale_price' => 'double',
-      'weight' => 'double',
+        'sale_price' => 'double',
+        'weight' => 'double',
     ];
 
     public function product()
     {
-      return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product');
     }
 
     public function sale()
     {
-      return $this->belongsTo('App\Sale');
+        return $this->belongsTo('App\Sale');
     }
 
-    public function raw_material(){
-      return $this->belongsTo(RawMaterial::class);
-  }
+    public function raw_material()
+    {
+        return $this->belongsTo(RawMaterial::class);
+    }
 }

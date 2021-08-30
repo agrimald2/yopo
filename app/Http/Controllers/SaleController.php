@@ -276,7 +276,6 @@ class SaleController extends Controller
 
     public function shop(Request $request)
     {
-        dd($request->all());
         // return $request;
         /*$payment_method_id = $request->paymentMethodId;
         $transaction_amount = $request->transactionAmount;
@@ -331,6 +330,11 @@ class SaleController extends Controller
         foreach ($inventories as $inventory) {
             $inventory->sale_id = $sale->id;
             $inventory->sale_price = $inventory->product->sale_price;
+            collect($request->inventories)->forEach(function ($inventoryRequest) use ($inventory) {
+                if (isset($inventoryRequest['id']) && $inventoryRequest['id'] == $inventory->id) {
+                    $inventory->options = isset($inventoryRequest['options']) ? $inventoryRequest['options'] : '';
+                }
+            });
             $inventory->save();
         }
 
