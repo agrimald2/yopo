@@ -18,6 +18,7 @@
 <script>
 import Modal from "./Modal.vue";
 import Loading from "@/views/product/Components/Loading.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -43,6 +44,10 @@ export default {
     });
   },
   methods: {
+    ...mapActions({
+      vuexAddProduct: "sale/addProduct",
+    }),
+
     fetchData() {
       const url = `products/${this.id}`;
       return new Promise((resolve, reject) => {
@@ -76,11 +81,7 @@ export default {
     },
 
     addToLocalCart() {
-      /**
-       * Todo: add product to vuex
-       */
-      //let doc = Object.assign({}, product);
-      //this.addProduct(doc);
+      this.vuexAddProduct(Object.assign({ counter: this.qty }, product));
     },
 
     showSuccessToast() {
