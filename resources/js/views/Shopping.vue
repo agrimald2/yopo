@@ -271,7 +271,7 @@ export default {
           console.log(product);
           product.inventory = product.inventory_shop;
           // product.inventory = product.inventory_all.filter(e => e.office_id == 1);
-          this.addProduct(product);
+          this.addProduct({ ...product, options: item.options });
         }
       });
     });
