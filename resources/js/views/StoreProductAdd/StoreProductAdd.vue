@@ -52,10 +52,11 @@ export default {
     },
 
     onModalAdded(input) {
-      this.submitProductToCart(input);
+      const options = Object.keys(input).map((key) => `${key}: ${input[key]}`);
+      this.submitProductToCart(options);
     },
 
-    submitProductToCart(options = {}) {
+    submitProductToCart(options = null) {
       const data = {
         product: {
           id: this.id,

@@ -9,15 +9,16 @@ class Shopping extends Model
     protected $fillable = [
         'tmp_id',
         'product_id',
-        'counter', 
+        'counter',
+        'options',
     ];
 
     protected $casts = [
-      'counter' => 'double',
+        'counter' => 'double',
     ];
 
     public function product()
     {
-      return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product');
     }
 }
