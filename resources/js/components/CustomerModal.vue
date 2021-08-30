@@ -178,10 +178,12 @@ export default {
           //this.$emit('confirm', sale);
           let inventories = [];
           this.products.forEach((item) => {
-            inventories.push({
-              ...this.checkInventory(item),
-              options: item.options,
-            });
+            inventories.push(
+              ...this.checkInventory(item).map((x) => ({
+                ...x,
+                options: item.options,
+              }))
+            );
           });
           axios
             .post("/sales/shop", {
