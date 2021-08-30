@@ -74,13 +74,13 @@ export default {
       };
 
       axios.post("shoppings", data).then((res) => {
-        this.addToLocalCart();
+        this.addToLocalCart(this.product);
         this.showSuccessToast();
         this.redirectToStore();
       });
     },
 
-    addToLocalCart() {
+    addToLocalCart(product) {
       this.vuexAddProduct(Object.assign({ counter: this.qty }, product));
     },
 
