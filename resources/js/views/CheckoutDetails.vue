@@ -1,44 +1,82 @@
 <template>
-<div>
-  <checkout-modal description="Yopo.pe" :transaction-amount="items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + (sale.delivery_price || 0)" :sale="sale" @confirm="successCheckout" @error="errorCheckout"/>
-  <customer-modal @confirm="submit"/>
-  <div class="row d-sm-block d-md-none" style="background-color: #ddc237; min-height:60vh">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm fixed-top store_topbar">
-      DETALLES DE SU COMPRA
-      <router-link to="/store" class="d-flex align-items-center" style="color: black; font-size: 0.8rem; position:fixed; right:20vw">
-        <img src="@/assets/img/black_circle.png" alt="">
-      </router-link>   
-      <a href="https://wa.me/51924649794" class="" >
-        <i class="fas fa-arrow-circle-left" style="position: absolute;color: #ddc237;left: 3vw;top: 1px;font-size: 2rem;"></i>
-      </a>   
-    </nav>
-    <div class="negro"></div>
-    <div class="top_cart">
+  <div>
+    <checkout-modal
+      description="Yopo.pe"
+      :transaction-amount="items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + (sale.delivery_price || 0)"
+      :sale="sale"
+      @confirm="successCheckout"
+      @error="errorCheckout"
+    />
+    <customer-modal @confirm="submit" />
+    <div
+      class="row d-sm-block d-md-none"
+      style="background-color: #ddc237; min-height:60vh"
+    >
+      <nav class="navbar navbar-expand-md navbar-light shadow-sm fixed-top store_topbar">
+        DETALLES DE SU COMPRA
+        <router-link
+          to="/store"
+          class="d-flex align-items-center"
+          style="color: black; font-size: 0.8rem; position:fixed; right:20vw"
+        >
+          <img
+            src="@/assets/img/black_circle.png"
+            alt=""
+          >
+        </router-link>
+        <a
+          href="https://wa.me/51924649794"
+          class=""
+        >
+          <i
+            class="fas fa-arrow-circle-left"
+            style="position: absolute;color: #ddc237;left: 3vw;top: 1px;font-size: 2rem;"
+          ></i>
+        </a>
+      </nav>
+      <div class="negro"></div>
+      <div class="top_cart">
         <div class="row">
           <h4>Informacion Venta : &nbsp Y - 000{{(sale.id)}} </h4>
         </div>
         <div class="row container_list">
-          <div class="row" v-for='item in products' :key="item.id">
+          <div
+            class="row"
+            v-for='item in products'
+            :key="item.id"
+          >
+
             <div class="col-8">
-              <img style="width: 10vw;" :src="`/api/products/${item.product.image_url}`" alt=""/>
-               &nbsp
-                  <span style="color:white">{{ item.totalWeight }}</span>
-                &nbsp
-               {{item.product.name}}
+              <img
+                style="width: 10vw;"
+                :src="`/api/products/${item.product.image_url}`"
+                alt=""
+              />
+              &nbsp
+              <span style="color:white">{{ item.totalWeight }}</span>
+              &nbsp
+              {{item.product.name}}
             </div>
             <div class="col-3 row">
-              <div class="col-12" style="padding-left: 1px;padding-right: 1px;">
-                 S/ {{ item.sale_price.toFixed(2) }}
+              <div
+                class="col-12"
+                style="padding-left: 1px;padding-right: 1px;"
+              >
+                S/ {{ item.sale_price.toFixed(2) }}
               </div>
               <!--<div class="col-6" style="padding-left: 1px;padding-right: 1px;">
                 <span >
                   S/ {{ (item.totalWeight * item.sale_price).toFixed(2) }}
                 </span>
               </div>-->
-            </div>            
+            </div>
+            <div
+              class="col-12"
+              v-html="eol2br(item.options)"
+            ></div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
     <div class="bot_cart">
       <div class="row">
@@ -48,59 +86,94 @@
         <h4>CLIENTE: {{sale.customer.name}} </h4>
         <h4>DISTRITO: {{ sale.delivery.name }}</h4>
       </div>
-      <div>        <h4>{{ sale.customer.address }}</h4> </div>
+      <div>
+        <h4>{{ sale.customer.address }}</h4>
+      </div>
       <div class="row">
         <h4>SUBTOTAL: S/ {{ (items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + 0).toFixed(2) }}</h4>
         <h4>COSTO DE ENVIO: S/ {{ sale.delivery_price }}</h4>
       </div>
       <div class="row sale_info">
-          <div class="row">
-            <div class="col-6" style="text-align:left">TOTAL</div>
-            <div class="col-6" style="text-align:right">S/ {{ (items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + sale.delivery_price).toFixed(2) }} </div>
-          </div>
+        <div class="row">
+          <div
+            class="col-6"
+            style="text-align:left"
+          >TOTAL</div>
+          <div
+            class="col-6"
+            style="text-align:right"
+          >S/ {{ (items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + sale.delivery_price).toFixed(2) }} </div>
+        </div>
       </div>
-      <div class="row" style="justify-content:center">
+      <div
+        class="row"
+        style="justify-content:center"
+      >
         <h4 style="color:white">
           ¡GRACIAS POR TU COMPRA!
         </h4>
       </div>
-      
-      <div class="row" style="justify-content: center;">
-        <div class="row" style="width:100vw; justify-content: center;">
-          <input style=" width: 30%; font-family: 'EathomaSans'; text-align: center;" type="tel" v-model="clave" name="code" id="code">
+
+      <div
+        class="row"
+        style="justify-content: center;"
+      >
+        <div
+          class="row"
+          style="width:100vw; justify-content: center;"
+        >
+          <input
+            style=" width: 30%; font-family: 'EathomaSans'; text-align: center;"
+            type="tel"
+            v-model="clave"
+            name="code"
+            id="code"
+          >
         </div>
         <br>
         <br>
-        <div v-if="clave == '2021'" class="row"  style="margin-top: 2vh;">
-          <div class="col-6">        
+        <div
+          v-if="clave == '2021'"
+          class="row"
+          style="margin-top: 2vh;"
+        >
+          <div class="col-6">
             <a :href="
             'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0AHemos%20confirmado%20tu%20pedido%2C%20a%20continuación%20te%20indicamos%20nuestro%20métodos%20de%20pago%20y%20la%20opción%20de%20pagar%20por%20medio%20de%20nuestra%20plataforma%20virtual%3A%0Ahttp%3A%2F%2Fyopo.pe%2F'+sale.id+'%2Fcheckout'">
-            <div class="btn btn-success">
+              <div class="btn btn-success">
                 <i class="fas fa-check"></i>
-            </div>
-           </a>
+              </div>
+            </a>
           </div>
           <div class="col-6">
             <a :href="
             'https://api.whatsapp.com/send?phone=51'+sale.customer.mobile+'&text=Hola!%20'+sale.customer.name+'%0ALo%20Sentimos,%20no%20pudimos%20confirmar%20tu%20pedido'">
               <div class="btn btn-danger">
-                  <i class="fas fa-times"></i>
+                <i class="fas fa-times"></i>
               </div>
             </a>
           </div>
         </div>
       </div>
 
-        <img src="@/assets/img/left_esquina.png" alt="" id="left_esquina">
-        <img src="@/assets/img/right_esquina.png" alt="" id="right_esquina">
+      <img
+        src="@/assets/img/left_esquina.png"
+        alt=""
+        id="left_esquina"
+      >
+      <img
+        src="@/assets/img/right_esquina.png"
+        alt=""
+        id="right_esquina"
+      >
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import CustomerModal from '@/components/CustomerModal'
-import CheckoutModal from '@/components/CheckoutPaymentModal'
+import { mapActions, mapGetters } from "vuex";
+import CustomerModal from "@/components/CustomerModal";
+import CheckoutModal from "@/components/CheckoutPaymentModal";
 
 export default {
   components: {
@@ -111,7 +184,7 @@ export default {
     this.loadMercadoPago();
     var saleId = this.$route.params.saleId;
     if (saleId) {
-      axios.get(`sales/${saleId}`).then(res => {
+      axios.get(`sales/${saleId}`).then((res) => {
         console.log(res);
         var sale = res.data.sale;
         this.setSale(sale);
@@ -121,7 +194,9 @@ export default {
           if (groupItems.hasOwnProperty(key)) {
             const element = groupItems[key];
             let product = element[0];
-            product.totalWeight = element.map(e => e.weight).reduce((a, b) => a + b, 0);
+            product.totalWeight = element
+              .map((e) => e.weight)
+              .reduce((a, b) => a + b, 0);
             this.products.push(product);
           }
         }
@@ -134,50 +209,50 @@ export default {
   },
   data() {
     return {
-      token: process.env.VUE_APP_TOKEN || 'TEST-dd114825-b697-4ce1-9f03-e5fce322b40f',
+      token:
+        process.env.VUE_APP_TOKEN ||
+        "TEST-dd114825-b697-4ce1-9f03-e5fce322b40f",
       inventories: [],
       checkout: {},
-      years : [        
-        2021,
-        2022,
-        2023,
-        2024,
-        2025,
-        2026
-      ],
+      years: [2021, 2022, 2023, 2024, 2025, 2026],
       months: [
-        '01',
-        '02',
-        '03',
-        '04',
-        '05',
-        '06',
-        '07',
-        '08',
-        '09',
-        '10',
-        '11',
-        '12',
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
       ],
       products: [],
       items: [],
       groupitems: [],
-      clave: '',
-    }
+      clave: "",
+    };
   },
   computed: {
     ...mapGetters({
-      sale: 'sale/getSale',
-      totalProducts: 'sale/totalProducts',
+      sale: "sale/getSale",
+      totalProducts: "sale/totalProducts",
       // products: 'sale/products',
     }),
   },
   methods: {
     ...mapActions({
-      addProduct: 'sale/addProduct',
-      removeAllProducts: 'sale/removeAllProducts',
-      setSale: 'sale/setSale',
+      addProduct: "sale/addProduct",
+      removeAllProducts: "sale/removeAllProducts",
+      setSale: "sale/setSale",
     }),
+    eol2br(text) {
+      if (text) {
+        return text.replace(/\n/g, "<br />");
+      }
+    },
     successCheckout(data) {
       // this.$router.replace(`/${data.sale.id}/checkoutDetails`);
       // axios.get('shoppings/removeAll').catch(err => {
@@ -192,8 +267,8 @@ export default {
     },
     submit(sale) {
       this.setSale(sale);
-      $('.modal').modal('hide');
-      $('#checkoutModal').modal('show');
+      $(".modal").modal("hide");
+      $("#checkoutModal").modal("show");
       this.$loading(false);
     },
     loadMercadoPago() {
@@ -203,168 +278,185 @@ export default {
     guessPaymentMethod() {
       let cardnumber = document.getElementById("cardNumber").value;
       if (cardnumber.length >= 6) {
-      let bin = cardnumber.substring(0,6);
-      Mercadopago.getPaymentMethod({
-        "bin": bin
-      }, this.setPaymentMethod.bind(this));
+        let bin = cardnumber.substring(0, 6);
+        Mercadopago.getPaymentMethod(
+          {
+            bin: bin,
+          },
+          this.setPaymentMethod.bind(this)
+        );
       }
     },
     setPaymentMethod(status, response) {
       if (status == 200) {
         let paymentMethodId = response[0].id;
-        let element = document.getElementById('payment_method_id');
+        let element = document.getElementById("payment_method_id");
         element.value = paymentMethodId;
       } else {
         alert(`payment method info error: ${response}`);
       }
-    }, 
+    },
     getInstallments() {
-      Mercadopago.getInstallments({
-        "payment_method_id" : document.getElementById('payment_method_id').value,
-        "amount": parseFloat(document.getElementById('transaction_amount').value)
-      }, function (status, response) {
-      if (status == 200) {
-        document.getElementById('installments').options.length = 0;
-        response[0].payer_costs.forEach(installment => {
-          let opt = document.createElement('option');
-          opt.text = installment.recommended_message;
-          opt.value = installment.installments;
-          document.getElementById('installments').appendChild(opt);
-        });
-      } else {
-        alert(`installments method info error: ${response}`);
-      }
-      });
+      Mercadopago.getInstallments(
+        {
+          payment_method_id: document.getElementById("payment_method_id").value,
+          amount: parseFloat(
+            document.getElementById("transaction_amount").value
+          ),
+        },
+        function (status, response) {
+          if (status == 200) {
+            document.getElementById("installments").options.length = 0;
+            response[0].payer_costs.forEach((installment) => {
+              let opt = document.createElement("option");
+              opt.text = installment.recommended_message;
+              opt.value = installment.installments;
+              document.getElementById("installments").appendChild(opt);
+            });
+          } else {
+            alert(`installments method info error: ${response}`);
+          }
+        }
+      );
     },
     sdkResponseHandler(status, response) {
-      console.log(status)
-      console.log(response)
+      console.log(status);
+      console.log(response);
       if (status != 200 && status != 201) {
         let msg = "";
         for (let data in response.cause) {
-          msg += response.cause[data].code + "-" + response.cause[data].description;
+          msg +=
+            response.cause[data].code + "-" + response.cause[data].description;
         }
         alert(msg);
       } else {
         document.getElementById("token").value = response.id;
         var inventories = [];
-        this.products.forEach(item => {
+        this.products.forEach((item) => {
           inventories.push(...this.checkInventory(item));
         });
         if (inventories.length) {
           var sale = this.sale;
-          sale.channel = 'TIENDA VIRTUAL';
-          sale.deliver_date = 'true';
-          axios.post('sales', { inventories, sale }).then(res => {
-            console.log(res);
-            axios.get('shoppings/removeAll').catch(err => {
+          sale.channel = "TIENDA VIRTUAL";
+          sale.deliver_date = "true";
+          axios
+            .post("sales", { inventories, sale })
+            .then((res) => {
+              console.log(res);
+              axios.get("shoppings/removeAll").catch((err) => {
+                console.log(err.response);
+              });
+              let sale = res.data.sale;
+              this.removeAllProducts();
+              axios
+                .post("checkout", {
+                  payment_method_id:
+                    document.getElementById("payment_method_id").value,
+                  transaction_amount:
+                    document.getElementById("transaction_amount").value,
+                  token: document.getElementById("token").value,
+                  email: document.getElementById("email").value,
+                  sale,
+                })
+                .then((res) => {
+                  this.$loading(false);
+                  console.log(res.data);
+                  this.$router.replace(`/${sale.id}/checkout`);
+                  location.reload();
+                  this.$snotify.success("Compra reazalizada correctamente");
+                })
+                .catch((err) => {
+                  this.$loading(false);
+                  console.log(err);
+                  var res = err.response;
+                  console.log(err.response);
+                  if (res.data.msg[2]) {
+                    alert(res.data.msg[0]);
+                  } else {
+                    alert(res.data.msg[0]);
+                    window.location.reload(0);
+                  }
+                });
+            })
+            .catch((err) => {
               console.log(err.response);
             });
-            let sale = res.data.sale;
-            this.removeAllProducts();
-            axios.post('checkout', {
-              'payment_method_id': document.getElementById('payment_method_id').value,
-              'transaction_amount': document.getElementById('transaction_amount').value,
-              'token': document.getElementById("token").value,
-              'email': document.getElementById('email').value,
-              sale,
-            }).then(res => {
-              this.$loading(false);
-              console.log(res.data);
-              this.$router.replace(`/${sale.id}/checkout`);
-              location.reload();
-              this.$snotify.success('Compra reazalizada correctamente');
-            }).catch(err => {
-              this.$loading(false);
-              console.log(err);
-              var res = err.response;
-              console.log(err.response);
-              if (res.data.msg[2]) {
-                alert(res.data.msg[0]);
-              } else {
-                alert(res.data.msg[0]);
-                window.location.reload(0)
-              }
-            });
-          }).catch(err => {
-            console.log(err.response);
-          });
         } else {
-          this.$snotify.error('Debe haber almenos un producto disponible');
-          $('.modal').modal('hide');
+          this.$snotify.error("Debe haber almenos un producto disponible");
+          $(".modal").modal("hide");
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .container {
-    max-width: 70rem;
-  }
-  form {
-    /* color: white; */
-    font-size: 1.5rem;
-  }
-  .cart_buttons{
-    background-color: rgb(245, 166, 35)!important;
-    color: black!important;
-  }
-
-  .sale_info{
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
+.container {
+  max-width: 70rem;
+}
+form {
+  /* color: white; */
+  font-size: 1.5rem;
+}
+.cart_buttons {
+  background-color: rgb(245, 166, 35) !important;
+  color: black !important;
 }
 
-.sale_info .row{
+.sale_info {
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.sale_info .row {
   width: 100%;
   background-color: black;
   padding: 10px;
   color: #ddc237;
-  font-family: 'EATHOMASANS';
+  font-family: "EATHOMASANS";
   font-size: 0.75rem;
   border-radius: 5px;
 }
-.bot_cart{
+.bot_cart {
   width: 100vw;
   padding-bottom: 10vh;
   background-color: #ddc237;
 }
-.wha_row{
-      justify-content: center;
+.wha_row {
+  justify-content: center;
 }
-.wha_row .row{
+.wha_row .row {
   background-color: black;
   padding: 10px;
   color: #ddc237;
-  font-family: 'EATHOMASANS';
+  font-family: "EATHOMASANS";
   font-size: 0.65rem;
   border-radius: 5px;
 }
-#left_esquina{
+#left_esquina {
   position: fixed;
   left: 0px;
   width: 15vw;
   bottom: 0;
 }
-#right_esquina{
+#right_esquina {
   position: fixed;
   right: 0px;
   width: 15vw;
   bottom: 0;
 }
-.btn_maths{
-    padding-left: 0;
-    border: none;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    border-bottom-width: 0px;
-    background-color: #2d2107;
+.btn_maths {
+  padding-left: 0;
+  border: none;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  border-bottom-width: 0px;
+  background-color: #2d2107;
 }
-.counter{
+.counter {
   background-color: #ddc237;
   padding-right: 5px;
   padding-left: 5px;
@@ -373,10 +465,10 @@ export default {
   margin-bottom: 9px;
   padding-bottom: 0px;
 }
-i{
+i {
   font-size: 1.2rem;
 }
-.btn_add{
+.btn_add {
   font-size: 0.85rem;
   margin-top: 3px;
   margin-bottom: 2px;
@@ -384,48 +476,48 @@ i{
   color: #ddc237;
   font-family: EATHOMASANS;
 }
-.col-4{
+.col-4 {
   padding: 0;
   padding-right: 5px;
 }
-.col-5{
+.col-5 {
   padding-right: 0;
   padding-left: 0;
   justify-content: center;
   display: flex;
   align-items: center;
 }
-.col-7{
+.col-7 {
   justify-content: left;
   display: flex;
   align-items: center;
 }
-.col{
+.col {
   padding-right: 0;
 }
-.container_list{
-    border-radius: 10px;
-    color: #ddc237;
-    padding-left: 10px;
-    width: 100vw;
-    padding-right: 10px;
-    font-family: 'EATHOMASANS';
-    font-size: 0.55rem;
+.container_list {
+  border-radius: 10px;
+  color: #ddc237;
+  padding-left: 10px;
+  width: 100vw;
+  padding-right: 10px;
+  font-family: "EATHOMASANS";
+  font-size: 0.55rem;
 }
 .container_list img {
   width: 10vw;
 }
-.container_list .row{
-    background-color: black;
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 2px;
-    margin-bottom: 2vh;
-    padding-right: 2px;
-    border-radius: 12px;
+.container_list .row {
+  background-color: black;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 2px;
+  margin-bottom: 2vh;
+  padding-right: 2px;
+  border-radius: 12px;
 }
 
-h4{
+h4 {
   background-color: black;
   font-family: EATHOMASANS;
   font-size: 0.7rem;
@@ -435,14 +527,14 @@ h4{
   margin-top: 10px;
   margin-left: 10px;
 }
-.top_cart{
+.top_cart {
   margin-top: 10vh;
   width: 100vw;
 }
-.row{
+.row {
   margin: 0;
 }
-.negro{
+.negro {
   z-index: 2;
   position: fixed;
   background-color: #ddc237;
@@ -450,20 +542,20 @@ h4{
   width: 100vw;
   height: 8vh;
 }
-.store_topbar{
-    font-family: EathomaSans;
-    background-color: black;
-    height: 5vh;
-    color: #ddc237;
-    margin-top: 3vh;
-    justify-content: center;
-    text-align: center;
-    font-size: 0.9rem;
+.store_topbar {
+  font-family: EathomaSans;
+  background-color: black;
+  height: 5vh;
+  color: #ddc237;
+  margin-top: 3vh;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
 }
-.store_topbar img{
-    width: 15vw;
-    right: 4vw;
-    position: fixed;
-    top: 2vh;
+.store_topbar img {
+  width: 15vw;
+  right: 4vw;
+  position: fixed;
+  top: 2vh;
 }
 </style>
