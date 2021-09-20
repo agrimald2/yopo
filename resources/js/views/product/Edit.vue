@@ -153,21 +153,28 @@
 
     </form>
 
-    <div class="bg-white rounded py-5 mx-4">
+    <div class="bg-white rounded pt-3 pb-5 mx-4">
       <product-questions
         :product_id="$route.params.productId"
         :questions="product.questions"
       />
+    </div>
+
+    <div class="mt-8 bg-white py-4">
+      Hola marranote
+      <Autocomplete />
     </div>
   </div>
 </template>
 
 <script>
 import ProductQuestions from "./Components/ProductQuestions.vue";
+import Autocomplete from "./Components/Autocomplete.vue";
 
 export default {
   components: {
-    ProductQuestions,
+    Autocomplete,
+    ProductQuestions
   },
   mounted() {
     this.priviewImage = this.$el.querySelector("#priviewImage");
@@ -183,8 +190,8 @@ export default {
       product: {
         unit_code: "NIU",
         category: null,
-        sub_category: null,
-      },
+        sub_category: null
+      }
     };
   },
   computed: {
@@ -196,7 +203,7 @@ export default {
       } else {
         return null;
       }
-    },
+    }
   },
   methods: {
     setImage(file) {
@@ -212,15 +219,15 @@ export default {
     },
     fetchData() {
       var productId = this.$route.params.productId;
-      axios.get(`products/${productId}`).then((res) => {
+      axios.get(`products/${productId}`).then(res => {
         console.log(res);
         this.product = res.data.product;
       });
-      axios.get("categories").then((res) => {
+      axios.get("categories").then(res => {
         console.log(res);
         this.categories = res.data.categories;
       });
-      axios.get("subCategories").then((res) => {
+      axios.get("subCategories").then(res => {
         console.log(res);
         this.subCategories = res.data.subCategories;
       });
@@ -235,13 +242,13 @@ export default {
         formData.append("image_url", this.product.image_url);
         var config = {
           headers: {
-            "content-type": "multipart/form-data",
-          },
+            "content-type": "multipart/form-data"
+          }
         };
         try {
           var path = await axios
             .post("products/image", formData, config)
-            .then((res) => res.data);
+            .then(res => res.data);
         } catch (error) {
           console.log(error.response);
         }
@@ -250,16 +257,16 @@ export default {
       console.log(path);
       axios
         .put(`products/${this.product.id}`, { product: this.product })
-        .then((res) => {
+        .then(res => {
           console.log(res.data);
           this.$snotify.success("Se han guardado los cambios");
           // this.$router.replace('/products')
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.response);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
