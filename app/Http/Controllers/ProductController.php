@@ -140,4 +140,18 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
     }
+
+
+    public function autocomplete(Request $request)
+    {
+        $input = $request->input('input');
+
+        abort_unless($input, 400);
+
+        $products = Product::query()
+            ->where('name', 'like', "%$input%")
+            ->get();
+
+        return $products;
+    }
 }

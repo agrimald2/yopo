@@ -40,6 +40,8 @@ Route::post('/api/products/questions/remove', 'ProductQuestionController@removeQ
 Route::post('/api/products/questions/options/add', 'ProductQuestionController@addOption');
 Route::post('/api/products/questions/options/remove', 'ProductQuestionController@removeOption');
 
+Route::post('/api/products/autocomplete', 'ProductController@autocomplete');
+
 
 Route::get('/api/products/{key}/search', 'ProductController@search');
 Route::get('/api/customers/{key}/search', 'CustomerController@search');
