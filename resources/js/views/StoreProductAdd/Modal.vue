@@ -6,7 +6,7 @@
       </div>
 
       <div class="mt-3 text-2xl text-center">
-        "{{ product.name }}"
+        {{ product.name }}
       </div>
 
       <div class="px-4">
@@ -36,7 +36,30 @@
         </div>
       </div>
 
-      <div class="mt-4 text-center">
+      <div class="mt-4">
+
+        <div class="text-2xl text-center">
+          Productos Adicionales
+        </div>
+
+        <div class="mt-3 px-6">
+          <div class="flex items-center gap-4">
+
+            <counter />
+
+            <div class="text-xl font-bold flex-grow">
+              Refresco CocaCola
+            </div>
+
+            <div class="text-lg">
+              S/. 42
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-8 text-center">
         <div
           class="bg-black uppercase tracking-wide text-modal inline-block px-4 py-3 rounded border-b-4 border-yellow-700 cursor-pointer hover:-translate-y-1 transform transition"
           @click="onAddToCart"
@@ -45,6 +68,7 @@
           Añadir al carrito
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -60,19 +84,25 @@
 </style>
 
 <script>
+import Counter from "./Components/Counter.vue";
+
 export default {
   props: ["product"],
   emits: ["added"],
 
+  components: {
+    Counter
+  },
+
   data() {
     return {
-      input: {},
+      input: {}
     };
   },
 
   methods: {
     onAddToCart() {
-      const isValid = this.product.questions.every((x) => {
+      const isValid = this.product.questions.every(x => {
         return this.input.hasOwnProperty(x.question);
       });
 
@@ -81,7 +111,7 @@ export default {
       }
 
       this.$emit("added", this.input);
-    },
-  },
+    }
+  }
 };
 </script>
