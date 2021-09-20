@@ -1,21 +1,33 @@
 <template>
   <div>
-    <div class="flex items-stretch gap-2">
+    <div class="grid">
 
       <input
         type="text"
         v-model="query"
-        class="border px-3 py-2 flex-grow"
+        class="border px-3 py-2"
+        placeholder="Buscar un producto..."
       >
-
-      <div class="cursor-pointer flex items-center bg-gray-800 px-3 rounded text-white">
-        Añadir
-      </div>
 
     </div>
 
-    <div class="mt-4">
-      Hola
+    <div
+      class="mt-2 border p-2"
+      v-show="results.length"
+    >
+
+      <div class="grid gap-4">
+        <div
+          class="border border-gray-800 p-2 rounded flex gap-3 items-center
+          cursor-pointer hover:bg-gray-300"
+          v-for="item in results"
+          :key="item.id"
+        >
+          <i class="fas fa-arrow-right"></i>
+          {{ item.name }}
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -38,9 +50,6 @@ export default {
 
       // Clear results
       this.clearResults();
-
-      // If empty return
-      if (input == "") return;
 
       // Make request
       axios.post(this.url, { input }).then(response => {

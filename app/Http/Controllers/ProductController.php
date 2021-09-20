@@ -146,10 +146,10 @@ class ProductController extends Controller
     {
         $input = $request->input('input');
 
-        abort_unless($input, 400);
-
-        $products = Product::query()
+        $products = \DB::table('products')
+            ->select('id', 'name', 'sale_price')
             ->where('name', 'like', "%$input%")
+            ->limit(6)
             ->get();
 
         return $products;

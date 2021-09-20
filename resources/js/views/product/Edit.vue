@@ -160,8 +160,7 @@
       />
     </div>
 
-    <div class="mt-8 bg-white py-4 px-2 sm:px-4">
-      Hola marranote
+    <div class="mt-8 bg-white py-6 px-2 sm:px-4">
       <Autocomplete />
     </div>
   </div>
