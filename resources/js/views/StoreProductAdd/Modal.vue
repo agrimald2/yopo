@@ -42,8 +42,11 @@
           Productos Adicionales
         </div>
 
-        <div class="mt-3 px-6">
-          <div class="flex items-center gap-4">
+        <div class="mt-3 px-6 grid gap-5">
+          <div
+            class="flex items-center gap-4"
+            v-for="x in 4"
+          >
 
             <counter />
 
@@ -51,8 +54,11 @@
               Refresco CocaCola
             </div>
 
-            <div class="text-lg">
-              S/. 42
+            <div class="flex items-center">
+              <div class="pr-1 text-xl">+</div>
+              <div class="text-lg borderr px-2 rounded border-black">
+                S/. 42
+              </div>
             </div>
           </div>
         </div>
@@ -80,6 +86,9 @@
 }
 .text-modal {
   color: #ddc237;
+}
+.borderr {
+  border-width: 1px;
 }
 </style>
 
