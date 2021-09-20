@@ -1,46 +1,46 @@
-require('./bootstrap');
-import Vue from 'vue'
-import App from './App.vue'
-import StoreApp from './StoreApp'
-import router from './router'
-import store from './store'
-import VueFeather from 'vue-feather'
-import Snotify from 'vue-snotify'
-import PageNavigation from '@/components/PageNavigation'
-import Datepicker from '@/components/Datepicker'
-import ToggleButton from '@/components/ToggleButton'
-import VueLoading from 'vuejs-loading-plugin'
-import VueMoment from 'vue-moment'
-import moment from 'moment-timezone'
-import VueCarousel from 'vue-carousel';
+require("./bootstrap");
+import Vue from "vue";
+import App from "./App.vue";
+import StoreApp from "./StoreApp";
+import router from "./router";
+import store from "./store";
+import VueFeather from "vue-feather";
+import Snotify from "vue-snotify";
+import PageNavigation from "@/components/PageNavigation";
+import Datepicker from "@/components/Datepicker";
+import ToggleButton from "@/components/ToggleButton";
+import VueLoading from "vuejs-loading-plugin";
+import VueMoment from "vue-moment";
+import moment from "moment-timezone";
+import VueCarousel from "vue-carousel";
 
+import "./../css/tailwind.css";
 
-const VueScrollTo = require('vue-scrollto')
-Vue.use(VueScrollTo)
+const VueScrollTo = require("vue-scrollto");
+Vue.use(VueScrollTo);
 
 Vue.component(VueFeather.name, VueFeather);
-Vue.component('page-navigation', PageNavigation);
-Vue.component('datepicker', Datepicker);
-Vue.component('toggle-button', ToggleButton);
+Vue.component("page-navigation", PageNavigation);
+Vue.component("datepicker", Datepicker);
+Vue.component("toggle-button", ToggleButton);
 
 Vue.use(VueLoading);
 Vue.use(Snotify, { toast: { timeout: 4000 } });
-Vue.use(VueMoment, {moment})
+Vue.use(VueMoment, { moment });
 Vue.use(VueCarousel);
-
 
 Vue.mixin({
     data() {
         return {
             unitCodes: [
-                { unitCode: 'NIU', name: 'UNIDADES' },
-                { unitCode: 'KGM', name: 'KILOGRAMOS' },
-                { unitCode: 'BG', name: 'BOLSAS' },
-                { unitCode: 'BO', name: 'BOTELLAS' },
-                { unitCode: 'BX', name: 'CAJAS' },
-                { unitCode: 'PK', name: 'PAQUETES' },
-            ],
-        }
+                { unitCode: "NIU", name: "UNIDADES" },
+                { unitCode: "KGM", name: "KILOGRAMOS" },
+                { unitCode: "BG", name: "BOLSAS" },
+                { unitCode: "BO", name: "BOTELLAS" },
+                { unitCode: "BX", name: "CAJAS" },
+                { unitCode: "PK", name: "PAQUETES" }
+            ]
+        };
     },
     methods: {
         checkInventory(product) {
@@ -57,14 +57,14 @@ Vue.mixin({
                 if (product.counter % inventory.weight) {
                     continue;
                 }
-                if (product.counter >= (totalOne + inventory.weight)) {
+                if (product.counter >= totalOne + inventory.weight) {
                     totalOne += inventory.weight;
                     totalCollectionOne.push(inventory);
                 }
             }
 
             for (const inventory of product.inventory) {
-                if (product.counter >= (totalTwo + inventory.weight)) {
+                if (product.counter >= totalTwo + inventory.weight) {
                     totalTwo += inventory.weight;
                     totalCollectionTwo.push(inventory);
                 }
@@ -90,7 +90,7 @@ Vue.mixin({
             }
         },
         formatCode(code) {
-            var string = '' + code;
+            var string = "" + code;
             switch (string.length) {
                 case 1:
                     return `00000${code}`;
@@ -108,11 +108,11 @@ Vue.mixin({
         },
         formatTime(date) {
             date = new Date(date);
-            var ampm = 'AM';
+            var ampm = "AM";
             var hours = date.getHours();
             var minutes = date.getMinutes();
             if (hours >= 12) {
-                ampm = 'PM';
+                ampm = "PM";
             }
             if (hours >= 13) {
                 hours -= 12;
@@ -127,10 +127,10 @@ Vue.mixin({
             return `${hours} : ${minutes} ${ampm}`;
         },
         formatDate(date) {
-            moment.locale('es');
+            moment.locale("es");
             var d = moment(date);
-            return d.tz('America/Lima').format('ll')
-        },
+            return d.tz("America/Lima").format("ll");
+        }
     }
 });
 
@@ -138,10 +138,15 @@ new Vue({
     router,
     store,
     render: function(h) {
-        if (this.$route.path.includes('/store') || this.$route.path == '/payment' || this.$route.path == '/shopping' || this.$route.path.includes('/checkout')) {
+        if (
+            this.$route.path.includes("/store") ||
+            this.$route.path == "/payment" ||
+            this.$route.path == "/shopping" ||
+            this.$route.path.includes("/checkout")
+        ) {
             return h(StoreApp);
         } else {
             return h(App);
         }
-    },
-}).$mount('#app');
+    }
+}).$mount("#app");

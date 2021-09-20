@@ -1,26 +1,15 @@
 <template>
-  <div class="grid">
-    <input
-      type="text"
-      class="border p-2"
-      v-model="query"
-      @keyup.enter="pickFocusedResult"
-      @keyup.up="onKeyUp"
-      @keyup.down="onKeyDown"
-    />
-    <div
-      class="results border"
-      v-show="results.length"
-    >
-      <div
-        class="border-b px-4 py-2 hover:bg-gray-100 cursor-pointer"
-        :class="{'bg-yellow-200': key == focusIndex}"
-        v-for="result, key in results"
-        :key="result.id"
-        @click="pickResult(result)"
+  <div class="flex items-center">
+
+    <div>
+      <input
+        type="text"
+        class="border px-3"
       >
-        {{ result[$props.completeValue] }}
-      </div>
+    </div>
+
+    <div class="bg-gray-800 text-white">
+      Añadir
     </div>
 
   </div>
