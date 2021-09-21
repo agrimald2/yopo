@@ -4,7 +4,10 @@
       @click="add(-1)"
       class="cursor-pointer flex items-center bg-gray-900 text-yellow-400 rounded p-2 fas fa-minus"
     ></i>
-    <div class="select-none w-14 py-1 text-center bg-gray-900 text-yellow-400 px-2 text-3xl rounded">
+    <div
+      class="cursor-pointer select-none w-14 py-1 text-center bg-gray-900 text-yellow-400 px-2 text-3xl rounded"
+      @click="$emit('input', 0)"
+    >
       {{ value }}
     </div>
     <i

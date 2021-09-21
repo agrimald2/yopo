@@ -115,6 +115,8 @@ export default {
       Object.keys(this.aditionals).forEach(id => {
         const qty = this.aditionals[id];
 
+        if (qty <= 0) return;
+
         const data = {
           product: {
             id: id,
