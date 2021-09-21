@@ -7,7 +7,7 @@
         v-model="query"
         class="border px-3 py-2"
         placeholder="Buscar un producto..."
-        @blur="clearResults"
+        @blur="setTimeout(clearResults, 800)"
         @focus="queryResults"
       >
 
@@ -25,7 +25,7 @@
           style="background-color: white;"
           v-for="item in results"
           :key="item.id"
-          @click="onPick(item.id)"
+          @click="pick(item.id)"
         >
           <i class="fas fa-arrow-right"></i>
           {{ item.name }}
@@ -79,7 +79,7 @@ export default {
       this.results = [];
     },
 
-    onPick(id) {
+    pick(id) {
       this.$emit("picked", id);
       this.clearResults();
       this.query = "";
