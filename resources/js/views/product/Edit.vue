@@ -161,7 +161,10 @@
     </div>
 
     <div class="mt-6 px-3 sm:px-4 bg-white rounded pt-3 pb-5 mx-4">
-      <product-aditionals />
+      <product-aditionals
+        :id="$route.params.productId"
+        :model="product"
+      />
     </div>
   </div>
 </template>

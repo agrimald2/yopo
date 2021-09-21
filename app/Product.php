@@ -141,7 +141,7 @@ class Product extends Model
     }
 
 
-    public function related_by()
+    public function aditional_for()
     {
         return $this->belongsToMany(Product::class, 'aditional_products', 'child_product_id', 'owner_product_id');
     }

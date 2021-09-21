@@ -8,9 +8,10 @@
 
     <div class="mt-6 text-2xl">Productos Adicionales Actuales</div>
     <div class="mt-3 grid gap-4">
+      {{ model.aditionals }}
       <div
         class="border rounded flex items-center p-2 gap-4"
-        v-for="x in 4"
+        v-for="x in 2"
       >
         <div class="font-bold text-sm">S/. 40</div>
         <div class="flex-grow">Pollo Frito</div>
@@ -28,6 +29,8 @@
 import Autocomplete from "./Autocomplete.vue";
 
 export default {
+  props: ["id", "model"],
+
   components: {
     Autocomplete
   },
