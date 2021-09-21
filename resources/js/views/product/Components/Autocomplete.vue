@@ -7,6 +7,7 @@
         v-model="query"
         class="border px-3 py-2"
         placeholder="Buscar un producto..."
+        @blur="clearResults"
       >
 
     </div>
