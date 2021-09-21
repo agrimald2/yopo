@@ -8,6 +8,7 @@
         class="border px-3 py-2"
         placeholder="Buscar un producto..."
         @blur="clearResults"
+        @focus="queryResults"
       >
 
     </div>
@@ -50,7 +51,11 @@ export default {
   },
 
   watch: {
-    query() {
+    query: () => this.queryResults
+  },
+
+  methods: {
+    queryResults() {
       const input = this.query;
 
       // Clear results
@@ -60,10 +65,8 @@ export default {
       axios.post(this.url, { input }).then(response => {
         this.results = response.data;
       });
-    }
-  },
+    },
 
-  methods: {
     clearResults() {
       this.results = [];
     },
