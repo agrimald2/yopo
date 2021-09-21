@@ -131,4 +131,18 @@ class Product extends Model
     {
         return $this->questions()->count();
     }
+
+    /**
+     * Aditionals
+     */
+    public function aditionals()
+    {
+        return $this->belongsToMany(Product::class, 'aditional_products', 'owner_product_id', 'child_product_id');
+    }
+
+
+    public function related_by()
+    {
+        return $this->belongsToMany(Product::class, 'aditional_products', 'child_product_id', 'owner_product_id');
+    }
 }
