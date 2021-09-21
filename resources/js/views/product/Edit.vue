@@ -24,6 +24,17 @@
             </div>
             <div class="row form-group">
               <div class="col">
+                <label for="">
+                  <input
+                    type="checkbox"
+                    v-model="product.is_hidden"
+                  >
+                  Es producto oculto
+                </label>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col">
                 <label for="">Categoria</label>
                 <select
                   class="custom-select text-uppercase"
@@ -190,6 +201,7 @@ export default {
       file: null,
       product: {
         unit_code: "NIU",
+        is_hidden: null,
         category: null,
         sub_category: null
       }
