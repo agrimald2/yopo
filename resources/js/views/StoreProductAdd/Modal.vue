@@ -38,28 +38,16 @@
 
       <div class="mt-4">
 
-        <div class="text-2xl text-center">
+        <div class="text-2xl text-center bg-black text-yellow-400 py-2 uppercase tracking-wide">
           Productos Adicionales
         </div>
 
         <div class="mt-3 px-6 grid gap-5">
           <div
-            class="flex items-center gap-4"
-            v-for="x in 4"
+            v-for="aditional in product.aditionals"
+            :key="aditional.id"
           >
-
-            <counter />
-
-            <div class="text-xl font-bold flex-grow">
-              Refresco CocaCola
-            </div>
-
-            <div class="flex items-center">
-              <div class="pr-1 text-xl">+</div>
-              <div class="text-lg borderr px-2 rounded border-black">
-                S/. 42
-              </div>
-            </div>
+            <Aditional :model="aditional" />
           </div>
         </div>
 
@@ -87,20 +75,17 @@
 .text-modal {
   color: #ddc237;
 }
-.borderr {
-  border-width: 1px;
-}
 </style>
 
 <script>
-import Counter from "./Components/Counter.vue";
+import Aditional from "./Components/Aditional.vue";
 
 export default {
   props: ["product"],
   emits: ["added"],
 
   components: {
-    Counter
+    Aditional
   },
 
   data() {

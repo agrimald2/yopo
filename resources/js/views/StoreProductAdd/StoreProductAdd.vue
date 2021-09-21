@@ -23,35 +23,37 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     Modal,
-    Loading,
+    Loading
   },
   data() {
     return {
       id: this.$route.params.id,
       qty: this.$route.params.qty,
       product: {},
-      loading: true,
+      loading: true
     };
   },
   mounted() {
-    this.fetchData().then((product) => {
+    this.fetchData().then(product => {
       this.product = product;
-      if (product.questions.length > 0) {
-        this.loading = false;
-      } else {
+
+      if (product.questions.length == 0 && product.aditionals.length == 0) {
         this.submitProductToCart();
+        return;
       }
+
+      this.loading = false;
     });
   },
   methods: {
     ...mapActions({
-      vuexAddProduct: "sale/addProduct",
+      vuexAddProduct: "sale/addProduct"
     }),
 
     fetchData() {
       const url = `products/${this.id}`;
       return new Promise((resolve, reject) => {
-        axios.get(url).then((res) => {
+        axios.get(url).then(res => {
           resolve(res.data.product);
         });
       });
@@ -59,7 +61,7 @@ export default {
 
     onModalAdded(input) {
       const options = Object.keys(input)
-        .map((key) => `${key}: ${input[key]}`)
+        .map(key => `${key}: ${input[key]}`)
         .join("\n");
       this.submitProductToCart(options);
     },
@@ -69,11 +71,11 @@ export default {
         product: {
           id: this.id,
           counter: this.qty,
-          options,
-        },
+          options
+        }
       };
 
-      axios.post("shoppings", data).then((res) => {
+      axios.post("shoppings", data).then(res => {
         this.addToLocalCart(this.product);
         this.showSuccessToast();
         this.redirectToStore();
@@ -88,13 +90,13 @@ export default {
       const icon = `https://image.flaticon.com/icons/png/128/117/117645.png?ga=GA1.2.247189466.1619654400`;
       const msg = `${this.qty} "${this.product.name}" al carrito!`;
       this.$snotify.warning(msg, null, {
-        icon: icon,
+        icon: icon
       });
     },
 
     redirectToStore() {
       this.$router.push({ name: "store" });
-    },
-  },
+    }
+  }
 };
 </script>
