@@ -153,14 +153,14 @@
 
     </form>
 
-    <div class="bg-white rounded pt-3 pb-5 mx-4">
+    <div class="mt-6 bg-white rounded pt-3 pb-5 mx-4">
       <product-questions
         :product_id="$route.params.productId"
         :questions="product.questions"
       />
     </div>
 
-    <div class="mt-8 rounded bg-white py-6 px-2 sm:px-4">
+    <div class="mt-6 px-3 sm:px-4 bg-white rounded pt-3 pb-5 mx-4">
       <product-aditionals />
     </div>
   </div>
@@ -172,7 +172,6 @@ import ProductAditionals from "./Components/ProductAditionals.vue";
 
 export default {
   components: {
-    Autocomplete,
     ProductQuestions,
     ProductAditionals
   },

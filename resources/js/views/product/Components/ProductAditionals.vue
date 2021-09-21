@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div class="text-2xl">Adicionales del Producto</div>
+    <div class="mt-6"></div>
     <Autocomplete @picked="onAditionalPicked" />
   </div>
 </template>
