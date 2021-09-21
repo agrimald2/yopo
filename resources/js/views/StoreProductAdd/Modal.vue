@@ -36,7 +36,10 @@
         </div>
       </div>
 
-      <div class="mt-4">
+      <div
+        class="mt-4"
+        v-show="product.aditionals.length"
+      >
 
         <div class="text-2xl text-center bg-black text-yellow-400 py-2 uppercase tracking-wide">
           Productos Adicionales
