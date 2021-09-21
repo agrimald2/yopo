@@ -29,7 +29,7 @@
 import Autocomplete from "./Autocomplete.vue";
 
 export default {
-  props: ["id", "model"],
+  props: ["id"],
 
   components: {
     Autocomplete
