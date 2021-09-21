@@ -160,25 +160,28 @@
       />
     </div>
 
-    <div class="mt-8 bg-white py-6 px-2 sm:px-4">
-      <Autocomplete @picked="onAditionalPicked" />
+    <div class="mt-8 rounded bg-white py-6 px-2 sm:px-4">
+      <product-aditionals />
     </div>
   </div>
 </template>
 
 <script>
 import ProductQuestions from "./Components/ProductQuestions.vue";
-import Autocomplete from "./Components/Autocomplete.vue";
+import ProductAditionals from "./Components/ProductAditionals.vue";
 
 export default {
   components: {
     Autocomplete,
-    ProductQuestions
+    ProductQuestions,
+    ProductAditionals
   },
+
   mounted() {
     this.priviewImage = this.$el.querySelector("#priviewImage");
     this.fetchData();
   },
+
   data() {
     return {
       priviewImage: {},
@@ -193,6 +196,7 @@ export default {
       }
     };
   },
+
   computed: {
     src() {
       if (this.product.image_url && !this.srcTmp) {
@@ -204,11 +208,8 @@ export default {
       }
     }
   },
-  methods: {
-    onAditionalPicked(id) {
-      alert(id);
-    },
 
+  methods: {
     setImage(file) {
       this.file = file;
       console.log(file);
