@@ -42,7 +42,7 @@
           Productos Adicionales
         </div>
 
-        <div class="mt-3 px-6 grid gap-5">
+        <div class="mt-3 px-6 grid gap-12">
           <div
             v-for="aditional in product.aditionals"
             :key="aditional.id"

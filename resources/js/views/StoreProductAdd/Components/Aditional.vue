@@ -2,10 +2,7 @@
   <div class="flex items-center gap-4">
     <div class="grid">
       <counter v-model="qty" />
-      <div
-        class="mt-2 flex justify-center"
-        v-show="qty"
-      >
+      <div class="mt-2 flex justify-center">
         <div class="text-lg bg-black text-yellow-400 px-2 rounded border-black">
           + S/. {{ model.sale_price * qty }}
         </div>
@@ -13,7 +10,7 @@
     </div>
 
     <div
-      class="w-24 h-20 flex items-center bg-cover bg-center"
+      class="w-24 h-20 flex rounded items-center bg-cover bg-center"
       :style="{ backgroundImage: `url('/api/products/${model.image_url}')`}"
     >
     </div>
