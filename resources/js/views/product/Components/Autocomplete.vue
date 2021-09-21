@@ -7,7 +7,7 @@
         v-model="query"
         class="border px-3 py-2"
         placeholder="Buscar un producto..."
-        @blur="setTimeout(clearResults, 800)"
+        @blur="onBlur"
         @focus="queryResults"
       >
 
@@ -21,7 +21,7 @@
       <div class="grid gap-4">
         <div
           class="border border-gray-800 py-2 px-3 rounded flex gap-3 items-center
-          cursor-pointer hover:text-green-400"
+          cursor-pointer hover:text-green-400 text-lg justify-center"
           style="background-color: white;"
           v-for="item in results"
           :key="item.id"
@@ -58,6 +58,10 @@ export default {
   },
 
   methods: {
+    onBlur() {
+      setTimeout(this.clearResults, 800);
+    },
+
     queryResults() {
       const input = this.query;
 
