@@ -41,6 +41,9 @@ Route::post('/api/products/questions/options/add', 'ProductQuestionController@ad
 Route::post('/api/products/questions/options/remove', 'ProductQuestionController@removeOption');
 
 Route::post('/api/products/autocomplete', 'ProductController@autocomplete');
+Route::post('/api/products/aditionals/{product}', 'ProductAditionalController@index');
+Route::post('/api/products/aditionals/{product}/attach', 'ProductAditionalController@attach');
+Route::post('/api/products/aditionals/{product}/detach', 'ProductAditionalController@detach');
 
 
 Route::get('/api/products/{key}/search', 'ProductController@search');
