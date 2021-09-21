@@ -47,7 +47,10 @@
             v-for="aditional in product.aditionals"
             :key="aditional.id"
           >
-            <Aditional :model="aditional" />
+            <Aditional
+              :model="aditional"
+              v-model="aditionals[aditional.id]"
+            />
           </div>
         </div>
 
@@ -90,7 +93,8 @@ export default {
 
   data() {
     return {
-      input: {}
+      input: {},
+      aditionals: {}
     };
   },
 
@@ -105,6 +109,22 @@ export default {
       }
 
       this.$emit("added", this.input);
+
+      // Add values
+
+      Object.keys(this.aditionals).forEach(id => {
+        const qty = this.aditionals[id];
+
+        const data = {
+          product: {
+            id: id,
+            counter: qty,
+            options: null
+          }
+        };
+
+        axios.post("shoppings", data);
+      });
     }
   }
 };

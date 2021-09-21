@@ -35,7 +35,9 @@
 import Counter from "./Counter.vue";
 
 export default {
-  props: ["model"],
+  props: ["model", "value"],
+
+  emits: ["input"],
 
   components: {
     Counter
@@ -45,6 +47,12 @@ export default {
     return {
       qty: 0
     };
+  },
+
+  watch: {
+    qty(value) {
+      this.$emit("input", value);
+    }
   }
 };
 </script>
