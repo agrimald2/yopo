@@ -19,10 +19,12 @@ class Product extends Model
         'category_id',
         'image_url',
         'unit_code',
+        'is_hidden',
     ];
 
     protected $casts = [
         'sale_price' => 'double',
+        'is_hidden' => 'boolean'
     ];
 
     protected $appends = [
