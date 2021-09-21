@@ -1,15 +1,15 @@
 <template>
-  <div class="flex items-center gap-4">
+  <div class="flex items-stretch gap-4">
     <i
       @click="add(-1)"
-      class="cursor-pointer bg-gray-900 text-yellow-400 rounded p-2 fas fa-minus"
+      class="cursor-pointer flex items-center bg-gray-900 text-yellow-400 rounded p-2 fas fa-minus"
     ></i>
-    <div class="w-14 py-1 text-center bg-gray-900 text-yellow-400 px-2 text-3xl rounded">
+    <div class="select-none w-14 py-1 text-center bg-gray-900 text-yellow-400 px-2 text-3xl rounded">
       {{ value }}
     </div>
     <i
       @click="add(1)"
-      class="cursor-pointer bg-gray-900 text-yellow-400 rounded p-2 fas fa-plus"
+      class="cursor-pointer flex items-center bg-gray-900 text-yellow-400 rounded p-2 fas fa-plus"
     ></i>
   </div>
 </template>
