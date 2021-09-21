@@ -13,7 +13,7 @@
     </div>
 
     <div
-      class="w-20 h-20 flex items-center bg-cover bg-center"
+      class="w-24 h-20 flex items-center bg-cover bg-center"
       :style="{ backgroundImage: `url('/api/products/${model.image_url}')`}"
     >
     </div>
