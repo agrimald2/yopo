@@ -46,12 +46,15 @@ export default {
     return {
       query: "",
       results: [],
-      url: "products/autocomplete"
+      url: "products/autocomplete",
+      lastTimestamp: null
     };
   },
 
   watch: {
-    query: () => this.queryResults
+    query() {
+      this.queryResults();
+    }
   },
 
   methods: {
@@ -62,8 +65,13 @@ export default {
       this.clearResults();
 
       // Make request
+      let timestamp = Date.now();
+      this.lastTimestamp = timestamp;
+
       axios.post(this.url, { input }).then(response => {
-        this.results = response.data;
+        if (this.lastTimestamp <= timestamp) {
+          this.results = response.data;
+        }
       });
     },
 
