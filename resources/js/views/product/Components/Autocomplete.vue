@@ -12,16 +12,18 @@
     </div>
 
     <div
-      class="mt-2 border p-2"
+      class="mt-2 px-2 py-2 bg-gray-100 rounded"
       v-show="results.length"
     >
 
       <div class="grid gap-4">
         <div
-          class="border border-gray-800 p-2 rounded flex gap-3 items-center
-          cursor-pointer hover:bg-gray-300"
+          class="border border-gray-800 py-2 px-3 rounded flex gap-3 items-center
+          cursor-pointer hover:text-green-400"
+          style="background-color: white;"
           v-for="item in results"
           :key="item.id"
+          @click="onPick(item.id)"
         >
           <i class="fas fa-arrow-right"></i>
           {{ item.name }}
@@ -36,6 +38,8 @@
 
 <script>
 export default {
+  emits: ["picked"],
+
   data() {
     return {
       query: "",
@@ -61,6 +65,11 @@ export default {
   methods: {
     clearResults() {
       this.results = [];
+    },
+
+    onPick(id) {
+      this.$emit("picked", id);
+      this.clearResults();
     }
   }
 };
