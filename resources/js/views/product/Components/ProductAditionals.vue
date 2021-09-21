@@ -8,13 +8,13 @@
 
     <div class="mt-6 text-2xl">Productos Adicionales Actuales</div>
     <div class="mt-3 grid gap-4">
-      {{ model.aditionals }}
       <div
         class="border rounded flex items-center p-2 gap-4"
-        v-for="x in 2"
+        v-for="product in model.aditionals"
+        :key="product.id"
       >
-        <div class="font-bold text-sm">S/. 40</div>
-        <div class="flex-grow">Pollo Frito</div>
+        <div class="font-bold text-sm">S/. {{ product.sale_price }}</div>
+        <div class="flex-grow">{{ product.name }}</div>
         <div
           class="underline text-red-500 cursor-pointer"
           @click="onDelete"
