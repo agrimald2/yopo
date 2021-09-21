@@ -70,6 +70,7 @@ export default {
     onPick(id) {
       this.$emit("picked", id);
       this.clearResults();
+      this.query = "";
     }
   }
 };

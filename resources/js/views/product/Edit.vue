@@ -161,7 +161,7 @@
     </div>
 
     <div class="mt-8 bg-white py-6 px-2 sm:px-4">
-      <Autocomplete />
+      <Autocomplete @picked="onAditionalPicked" />
     </div>
   </div>
 </template>
@@ -205,6 +205,10 @@ export default {
     }
   },
   methods: {
+    onAditionalPicked(id) {
+      alert(id);
+    },
+
     setImage(file) {
       this.file = file;
       console.log(file);
@@ -216,6 +220,7 @@ export default {
         // this.priviewImage.src = reader.result;
       };
     },
+
     fetchData() {
       var productId = this.$route.params.productId;
       axios.get(`products/${productId}`).then(res => {
@@ -231,6 +236,7 @@ export default {
         this.subCategories = res.data.subCategories;
       });
     },
+
     async submit() {
       // if (!this.file) {
       //   return this.$snotify.error('Es necesario una imagen');
