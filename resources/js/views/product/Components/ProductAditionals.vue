@@ -1,14 +1,21 @@
 <template>
   <div>
-    <div class="text-2xl">Añadir un producto adicional</div>
+    <div class="text-2xl text-center">Añadir un producto adicional</div>
     <div class="mt-6"></div>
     <Autocomplete @picked="attach" />
 
     <!-- Aditionals list -->
 
-    <div class="mt-6 text-2xl">Productos Adicionales Actuales</div>
+    <div class="mt-6 text-2xl text-center">Productos Adicionales Actuales</div>
     <div class="mt-3 grid gap-4">
       <div
+        class="text-gray-500 text-center"
+        v-if="aditionals.length == 0"
+      >
+        Sin productos adicionales.
+      </div>
+      <div
+        v-else
         class="border rounded flex items-center p-2 gap-4"
         v-for="product in aditionals"
         :key="product.id"
