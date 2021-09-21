@@ -149,6 +149,7 @@ class ProductController extends Controller
         $products = \DB::table('products')
             ->select('id', 'name', 'sale_price')
             ->where('name', 'like', "%$input%")
+            ->whereNull('deleted_at')
             ->limit(6)
             ->get();
 

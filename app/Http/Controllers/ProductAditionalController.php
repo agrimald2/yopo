@@ -25,6 +25,7 @@ class ProductAditionalController extends Controller
         return $product->aditionals;
     }
 
+
     public function detach(Product $product, Request $request)
     {
         $request->validate([
