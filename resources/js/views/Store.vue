@@ -95,12 +95,11 @@
       <div class="products_container">
         <div
           class="product_container row"
-          v-for="item in filterProducts"
+          v-for="(item, key) in filterProducts"
           :key="item.id"
-          v-show="!item.is_hidden"
         >
           <product-card
-            v-if="item.id%2 == 0"
+            v-if="key%2 == 0"
             :product="item"
           />
           <product-card2
@@ -310,6 +309,7 @@ export default {
     },
     filterProducts() {
       return this.products
+        .filter(x => !x.is_hidden)
         .filter(e => !this.category_id || this.category_id == e.category_id)
         .filter(
           e =>
