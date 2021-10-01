@@ -59,10 +59,7 @@ export default {
       });
     },
 
-    onModalAdded(input) {
-      const options = Object.keys(input)
-        .map(key => `${key}: ${input[key]}`)
-        .join("\n");
+    onModalAdded(options) {
       this.submitProductToCart(options);
     },
 
