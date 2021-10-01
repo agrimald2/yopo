@@ -257,16 +257,17 @@ import CheckoutModal from "@/components/CheckoutModal";
 export default {
   components: {
     CustomerModal,
-    CheckoutModal,
+    CheckoutModal
   },
   mounted() {
-    axios.get("shoppings").then((res) => {
+    axios.get("shoppings").then(res => {
       console.log(res);
       this.removeAllProducts();
       var shoppings = res.data.shoppings;
-      shoppings.forEach((item) => {
+      shoppings.forEach(item => {
         var product = item.product;
         if (product) {
+          product["sale_price"] = item.price;
           product.counter = item.counter;
           console.log(product);
           product.inventory = product.inventory_shop;
@@ -283,15 +284,15 @@ export default {
         "TEST-dd114825-b697-4ce1-9f03-e5fce322b40f",
       delivery: null,
       customer: {},
-      deliveries: [],
+      deliveries: []
     };
   },
   computed: {
     ...mapGetters({
       sale: "sale/getSale",
       products: "sale/products",
-      totalProducts: "sale/totalProducts",
-    }),
+      totalProducts: "sale/totalProducts"
+    })
   },
   methods: {
     ...mapActions({
@@ -300,13 +301,13 @@ export default {
       plusProduct: "sale/plusProduct",
       removeProduct: "sale/removeProduct",
       setSale: "sale/setSale",
-      minusProduct: "sale/minusProduct",
+      minusProduct: "sale/minusProduct"
     }),
     checkDelivery() {
       $("#shoppingModal").modal("show");
     },
     removeP(product) {
-      axios.delete(`shoppings/${product.id}`).catch((err) => {
+      axios.delete(`shoppings/${product.id}`).catch(err => {
         console.log(err.response);
       });
       this.removeProduct(product);
@@ -314,19 +315,19 @@ export default {
     plusP(product) {
       console.log(product);
       this.plusProduct(product);
-      axios.post("shoppings", { product }).catch((err) => {
+      axios.post("shoppings", { product }).catch(err => {
         console.log(err.response);
       });
     },
     minusP(product) {
       this.minusProduct(product);
-      axios.post("shoppings", { product }).catch((err) => {
+      axios.post("shoppings", { product }).catch(err => {
         console.log(err.response);
       });
     },
     successCheckout(data) {
       this.$router.replace(`/${data.sale.id}/checkoutDetails`);
-      axios.get("shoppings/removeAll").catch((err) => {
+      axios.get("shoppings/removeAll").catch(err => {
         console.log(err.response);
       });
       this.removeAllProducts();
@@ -338,7 +339,7 @@ export default {
     },
     submit(sale) {
       var inventories = [];
-      this.products.forEach((item) => {
+      this.products.forEach(item => {
         inventories.push(...this.checkInventory(item));
       });
       if (inventories.length) {
@@ -351,8 +352,8 @@ export default {
         $(".modal").modal("hide");
       }
       this.$loading(false);
-    },
-  },
+    }
+  }
 };
 </script>
 
