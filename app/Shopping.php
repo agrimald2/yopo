@@ -21,4 +21,9 @@ class Shopping extends Model
     {
         return $this->belongsTo('App\Product');
     }
+
+    public function options()
+    {
+        return $this->hasMany(ShoppingOption::class);
+    }
 }
