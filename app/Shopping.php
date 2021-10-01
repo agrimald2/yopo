@@ -17,6 +17,9 @@ class Shopping extends Model
         'counter' => 'double',
     ];
 
+    /**
+     * Relationships
+     */
     public function product()
     {
         return $this->belongsTo('App\Product');
@@ -25,5 +28,18 @@ class Shopping extends Model
     public function options()
     {
         return $this->hasMany(ShoppingOption::class);
+    }
+
+    /**
+     * Attributes
+     */
+    public function getPriceAttribute()
+    {
+        $optionsTotal = $this->options
+            ->reduce(function ($carry, $option) {
+                return $carry + $option->price;
+            }, 0);
+
+        return $this->product->sale_price + $optionsTotal;
     }
 }

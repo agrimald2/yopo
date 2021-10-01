@@ -16,7 +16,13 @@ class ShoppingController extends Controller
      */
     public function index()
     {
-        $shoppings = Shopping::where('tmp_id', session('tmp_id'))->with('product')->get();
+        $shoppings = Shopping::query()
+            ->where('tmp_id', session('tmp_id'))
+            ->with('product', 'options')
+            ->get()
+            ->each
+            ->append('price');
+
         return ['shoppings' => $shoppings];
     }
 
