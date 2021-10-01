@@ -19,6 +19,7 @@ class CreateShoppingOptionsTable extends Migration
             $table->float('price');
 
             $table->unsignedBigInteger('shopping_id');
+            $table->unsignedBigInteger('inventory_id')->nullable();
 
             $table->timestamps();
         });
