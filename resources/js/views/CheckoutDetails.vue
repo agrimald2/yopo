@@ -46,7 +46,7 @@
             :key="item.id"
           >
 
-            <div class="col-8">
+            <div class="col-8 flex items-center">
               <img
                 style="width: 10vw;"
                 :src="`/api/products/${item.product.image_url}`"
@@ -62,7 +62,7 @@
                 class="col-12"
                 style="padding-left: 1px;padding-right: 1px;"
               >
-                S/ {{ item.sale_price.toFixed(2) }}
+                S/ {{ totalPriceFor(item) }}
               </div>
               <!--<div class="col-6" style="padding-left: 1px;padding-right: 1px;">
                 <span >
@@ -70,10 +70,17 @@
                 </span>
               </div>-->
             </div>
-            <div
-              class="col-12"
-              v-html="eol2br(item.options)"
-            ></div>
+            <div class="col-12">
+              <div class="grid pt-3">
+                <div
+                  class="my-1"
+                  v-for="option in item.shopping_options"
+                >
+                  + S/. {{ option.price }} ---
+                  {{ option.name }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -90,7 +97,7 @@
         <h4>{{ sale.customer.address }}</h4>
       </div>
       <div class="row">
-        <h4>SUBTOTAL: S/ {{ (items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + 0).toFixed(2) }}</h4>
+        <h4>SUBTOTAL: S/ {{ orderTotal }}</h4>
         <h4>COSTO DE ENVIO: S/ {{ sale.delivery_price }}</h4>
       </div>
       <div class="row sale_info">
@@ -102,7 +109,7 @@
           <div
             class="col-6"
             style="text-align:right"
-          >S/ {{ (items.map(e => e.weight * e.sale_price).reduce((a, b) => a + b, 0) + sale.delivery_price).toFixed(2) }} </div>
+          >S/ {{ orderTotal }} </div>
         </div>
       </div>
       <div
@@ -240,14 +247,34 @@ export default {
       sale: "sale/getSale",
       totalProducts: "sale/totalProducts"
       // products: 'sale/products',
-    })
+    }),
+    orderTotal() {
+      const totalItems = this.items
+        .map(e => {
+          return e.sale_price + this.totalOptions(e);
+        })
+        .reduce((a, b) => a + b + this.sale.delivery_price, 0);
+
+      return totalItems;
+    }
   },
   methods: {
+    totalAllOptions(items) {
+      return items.map(x => this.totalOptions(item));
+    },
+    totalOptions(item) {
+      return item.shopping_options.reduce((carry, x) => {
+        return carry + x.price;
+      }, 0);
+    },
     ...mapActions({
       addProduct: "sale/addProduct",
       removeAllProducts: "sale/removeAllProducts",
       setSale: "sale/setSale"
     }),
+    totalPriceFor(item) {
+      return item.sale_price + this.totalOptions(item);
+    },
     eol2br(text) {
       if (text) {
         return text.replace(/\n/g, "<br />");
