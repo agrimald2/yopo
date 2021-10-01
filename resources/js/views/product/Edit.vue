@@ -276,6 +276,7 @@ export default {
         .put(`products/${this.product.id}`, { product: this.product })
         .then(res => {
           console.log(res.data);
+          a;
           this.$snotify.success("Se han guardado los cambios");
           // this.$router.replace('/products')
         })
