@@ -136,9 +136,8 @@ export default {
         "PE",
         [-12.1453041, -77.0561434],
         0.15,
-        (address) => {
+        address => {
           this.customer.address = address;
-          alert(address);
         }
       );
 
@@ -150,18 +149,18 @@ export default {
       delivery: null,
       deliveries: [],
       customer: {},
-      observations: "",
+      observations: ""
     };
   },
   computed: {
     ...mapGetters({
       products: "sale/products",
-      totalProducts: "sale/totalProducts",
-    }),
+      totalProducts: "sale/totalProducts"
+    })
   },
   methods: {
     fecthData() {
-      axios.get("deliveries").then((res) => {
+      axios.get("deliveries").then(res => {
         console.log(res);
         this.deliveries = res.data.deliveries;
       });
@@ -178,7 +177,7 @@ export default {
         north: center.lat + radius,
         south: center.lat - radius,
         east: center.lng + radius,
-        west: center.lng - radius,
+        west: center.lng - radius
       };
 
       const options = {
@@ -186,7 +185,7 @@ export default {
         componentRestrictions: { country },
         fields: ["address_components", "geometry", "icon", "name"],
         strictBounds: false,
-        types: ["address"],
+        types: ["address"]
       };
       const autocomplete = new google.maps.places.Autocomplete(input, options);
       if (callback) {
@@ -198,15 +197,15 @@ export default {
     findCustomer() {
       if (this.customer.document.length == 8) {
         var params = {
-          dni: this.customer.document,
+          dni: this.customer.document
         };
         axios
           .get("customers/byDni", { params })
-          .then((res) => {
+          .then(res => {
             console.log(res);
             this.customer = res.data.customer;
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err.response);
           });
       }
@@ -217,7 +216,7 @@ export default {
       this.$loading(true);
       axios
         .post("customers", { customer: this.customer })
-        .then((res) => {
+        .then(res => {
           console.log(res);
           var customer = res.data.customer;
           var sale = {};
@@ -228,20 +227,20 @@ export default {
           // this.$loading(false);
           //this.$emit('confirm', sale);
           let inventories = [];
-          this.products.forEach((item) => {
+          this.products.forEach(item => {
             inventories.push(
-              ...this.checkInventory(item).map((x) => ({
+              ...this.checkInventory(item).map(x => ({
                 ...x,
-                options: item.options,
+                options: item.options
               }))
             );
           });
           axios
             .post("/sales/shop", {
               inventories,
-              sale: sale,
+              sale: sale
             })
-            .then((res) => {
+            .then(res => {
               console.log("axios.post('/sales/shop') =>", res);
               this.loading = 2;
               var id = res.data.sale.id;
@@ -251,7 +250,7 @@ export default {
                 id +
                 "%2FcheckoutDetails%0AQueda%20a%20la%20espera.";
             })
-            .catch((error) => {
+            .catch(error => {
               this.loading = false;
               this.loading = 3;
               setTimeout(() => {
@@ -261,11 +260,11 @@ export default {
               console.log(error.response);
             });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.response);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
