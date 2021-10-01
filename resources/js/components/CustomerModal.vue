@@ -231,7 +231,7 @@ export default {
             inventories.push(
               ...this.checkInventory(item).map(x => ({
                 ...x,
-                options: item.options
+                shoppingOptions: item.shoppingOptions
               }))
             );
           });

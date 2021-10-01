@@ -268,6 +268,8 @@ export default {
         var product = item.product;
         if (product) {
           product["sale_price"] = item.price;
+          product["shoppingOptions"] = item.options;
+
           product.counter = item.counter;
           console.log(product);
           product.inventory = product.inventory_shop;
