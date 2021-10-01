@@ -21,11 +21,11 @@
 
           <div class="mt-2">
             <select
-              v-model="input[question.question]"
+              v-model="input[question.id]"
               class="block w-full p-2 text-xl rounded"
             >
               <option
-                :value="option.option"
+                :value="option.id"
                 v-for="(option, key) in question.options"
                 :key="key"
               >
@@ -105,7 +105,7 @@ export default {
   methods: {
     onAddToCart() {
       const isValid = this.product.questions.every(x => {
-        return this.input.hasOwnProperty(x.question);
+        return this.input.hasOwnProperty(x.id);
       });
 
       if (!isValid) {
