@@ -29,6 +29,7 @@
                 v-for="(option, key) in question.options"
                 :key="key"
               >
+                + S/. {{ option.price }} -
                 {{ option.option }}
               </option>
             </select>
