@@ -61,7 +61,7 @@ export default {
 
   components: {
     QuestionItem,
-    Loading,
+    Loading
   },
 
   data() {
@@ -69,8 +69,8 @@ export default {
       loading: false,
       input: {
         question: null,
-        option: null,
-      },
+        option: null
+      }
     };
   },
 
@@ -90,9 +90,9 @@ export default {
       axios
         .post(url, {
           product_id: this.product_id,
-          question: input,
+          question: input
         })
-        .then((res) => {
+        .then(res => {
           this.questions.push(res.data);
           this.loading = false;
         });
@@ -104,9 +104,9 @@ export default {
       axios
         .post(url, {
           question_id: question.id,
-          option: input,
+          option: input
         })
-        .then((res) => {
+        .then(res => {
           question.options.push(res.data);
           done();
         });
@@ -117,11 +117,11 @@ export default {
 
       axios
         .post(url, {
-          id: option.id,
+          id: option.id
         })
-        .then((res) => {
+        .then(res => {
           question.options.splice(
-            question.options.findIndex((x) => x === option),
+            question.options.findIndex(x => x === option),
             1
           );
           done();
@@ -133,16 +133,16 @@ export default {
 
       axios
         .post(url, {
-          id: question.id,
+          id: question.id
         })
-        .then((res) => {
+        .then(res => {
           this.questions.splice(
-            this.questions.findIndex((x) => x === question),
+            this.questions.findIndex(x => x === question),
             1
           );
           done();
         });
-    },
-  },
+    }
+  }
 };
 </script>

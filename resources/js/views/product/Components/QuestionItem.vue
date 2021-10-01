@@ -29,7 +29,10 @@
           :key="option_key"
           class="flex justify-between py-4 border-b px-4"
         >
-          <div>
+          <div class="py-1">
+            <span class="mr-2 px-2 py-px rounded bg-gray-800 text-white">
+              + S/. {{ option.price }}
+            </span>
             {{ option.option }}
           </div>
           <div
@@ -42,11 +45,20 @@
       </div>
       <form @submit.prevent="addOption(question)">
         <div class="mt-4 flex items-center gap-4 px-8">
-          <input
-            class="flex-grow border py-2 px-3"
-            type="text"
-            v-model="input.option"
-          />
+          <div class="grid gap-3 flex-grow">
+            <input
+              class="flex-grow border py-2 px-3"
+              type="text"
+              v-model="input.option"
+              placeholder="Refresco, Postre, Salsa especial..."
+            />
+            <input
+              class="border py-2 px-3"
+              type="number"
+              v-model="input.price"
+              placeholder="Precio (solo numeros)"
+            >
+          </div>
           <button
             type="submit"
             class="rounded border px-4 py-2 cursor-pointer hover:bg-gray-100"
@@ -69,15 +81,16 @@ export default {
   emits: ["option-add", "option-delete", "question-delete"],
 
   components: {
-    Loading,
+    Loading
   },
 
   data() {
     return {
       input: {
         option: null,
+        price: null
       },
-      loading: false,
+      loading: false
     };
   },
 
@@ -87,13 +100,18 @@ export default {
     },
 
     addOption(question) {
-      const input = this.input.option;
-      if (input === "") return;
+      const input = this.input;
+      if (input.option == "") return;
 
       this.loading = true;
-      this.$emit("option-add", this.done, question, input);
+      this.$emit("option-add", this.done, question, {
+        option: input.option,
+        price: input.price
+      });
 
-      this.input.option = "";
+      // Reset form
+      this.input.option = null;
+      this.input.price = null;
     },
 
     deleteOption(question, option) {
@@ -104,7 +122,7 @@ export default {
     deleteQuestion(question) {
       this.loading = true;
       this.$emit("question-delete", this.done, question);
-    },
-  },
+    }
+  }
 };
 </script>
