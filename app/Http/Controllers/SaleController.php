@@ -17,6 +17,7 @@ use App\Mail\SaleNotifyPaymentCustomer;
 use App\Mail\SaleNotify;
 use MercadoPago;
 use App;
+use App\ShoppingOption;
 
 class SaleController extends Controller
 {
@@ -276,16 +277,10 @@ class SaleController extends Controller
 
     public function shop(Request $request)
     {
-        // return $request;
-        /*$payment_method_id = $request->paymentMethodId;
-        $transaction_amount = $request->transactionAmount;
-        $description = $request->description;
-        $installments = $request->installments;
-        $email = $request->email;
-        $first_name = $request->cardholderName;
-        $doc_type = $request->docType;
-        $doc_number = $request->docNumber;
-        $token = $request->token;*/
+        $request->validate([
+            'inventories' => 'required',
+            'sale' => 'required'
+        ]);
 
         $inventories = $request->inventories;
 
@@ -293,7 +288,9 @@ class SaleController extends Controller
             return $item['id'];
         });
 
-        $inventories = Inventory::whereIn('id', $ids)->with('product')->get();
+        $inventories = Inventory::whereIn('id', $ids)
+            ->with('product')
+            ->get();
 
         $check = $inventories->search(function ($item, $key) {
             return $item->sale_id != NULL;
@@ -303,33 +300,35 @@ class SaleController extends Controller
             return response(['message' => 'Revise la disponibilidad del inventario'], 400);
         }
 
-        /* try {
-            $mercadopago_payment = $this->checkout(
-                $payment_method_id,
-                $transaction_amount,
-                $description,
-                $installments,
-                $doc_type,
-                $doc_number,
-                $email,
-                $token
-            );
-        } catch (\Throwable $th) {
-            return response(['message' => 'Favor de revisar la información de la tarjeta'], 400);
-        }*/
-
         $sale = new Sale($request->sale);
-        /* $payment = new Payment();
-        $payment->mercadopago_id = $mercadopago_payment->id;
-        $payment->save();
-        $sale->payment_id = $payment->id;*/
         $sale->delivery_date = (new DateTime())->format('Y-m-d H:i:s');
         $sale->channel = "TIENDA VIRTUAL";
         $sale->save();
 
+        // Associate ShoppingOption with Inventory
+        collect($request->inventories)->each(function ($inventory) {
+            $inventoryId = $inventory['id'];
+            if (!array_key_exists('shoppingOptions', $inventory)) {
+                return;
+            }
+
+            $shoppingOptions = $inventory['shoppingOptions'];
+
+            collect($shoppingOptions)
+                ->each(function ($shopping) use ($inventoryId) {
+                    $id = $shopping['id'];
+                    $shoppingOption = ShoppingOption::find($id);
+                    if ($shoppingOption) {
+                        $shoppingOption->inventory_id = $inventoryId;
+                        $shoppingOption->save();
+                    }
+                });
+        });
+
         foreach ($inventories as $inventory) {
             $inventory->sale_id = $sale->id;
             $inventory->sale_price = $inventory->product->sale_price;
+
             collect($request->inventories)->each(function ($inventoryRequest) use ($inventory) {
                 if (isset($inventoryRequest['id']) && $inventoryRequest['id'] == $inventory->id) {
                     $inventory->options = isset($inventoryRequest['options']) ? $inventoryRequest['options'] : '';
@@ -337,17 +336,6 @@ class SaleController extends Controller
             });
             $inventory->save();
         }
-
-        /*try {
-            if (isSet($request->processPayment) && $request->processPayment == true) {
-                Mail::to($email)->send(new SaleNotifyPaymentCustomer(['id' => $sale->id]));
-            } else {
-                Mail::to($email)->send(new SaleNotifyCustomer(['id' => $sale->id]));
-            }
-            Mail::to(env('MAIL_USERNAME'), 'contacto@delgordo.com.pe')->send(new SaleNotify(['id' => $sale->id]));
-        } catch (\Throwable $th) {
-            error_log('No se pudo enviar email');
-        }*/
 
         return ['sale' => $sale];
     }
@@ -368,7 +356,9 @@ class SaleController extends Controller
                 return $query->with('user');
             }])
             ->find($id);
+
         $items = collect($sale->items)->groupBy('product_id');
+
         return [
             'sale' => $sale,
             'items' => $items,
