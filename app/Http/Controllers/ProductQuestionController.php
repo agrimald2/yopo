@@ -12,7 +12,7 @@ class ProductQuestionController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|numeric',
-            'question' => 'required|string',
+            'question' => 'required|string'
         ]);
 
         return ProductQuestion::create($validated)->load('options');
@@ -23,12 +23,14 @@ class ProductQuestionController extends Controller
     {
         $request->validate([
             'question_id' => 'required|numeric',
-            'option' => 'required|string',
+            'option' => 'required|array',
+            'option.option' => 'required|string',
+            'option.price' => 'required|numeric',
         ]);
 
         $question = ProductQuestion::findOrFail($request->question_id);
 
-        return $question->options()->create(['option' => $request->option]);
+        return $question->options()->create($request->option);
     }
 
     public function removeQuestion(Request $request)
