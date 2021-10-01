@@ -178,13 +178,13 @@ import CheckoutModal from "@/components/CheckoutPaymentModal";
 export default {
   components: {
     CustomerModal,
-    CheckoutModal,
+    CheckoutModal
   },
   mounted() {
     this.loadMercadoPago();
     var saleId = this.$route.params.saleId;
     if (saleId) {
-      axios.get(`sales/${saleId}`).then((res) => {
+      axios.get(`sales/${saleId}`).then(res => {
         console.log(res);
         var sale = res.data.sale;
         this.setSale(sale);
@@ -195,7 +195,7 @@ export default {
             const element = groupItems[key];
             let product = element[0];
             product.totalWeight = element
-              .map((e) => e.weight)
+              .map(e => e.weight)
               .reduce((a, b) => a + b, 0);
             this.products.push(product);
           }
@@ -227,26 +227,26 @@ export default {
         "09",
         "10",
         "11",
-        "12",
+        "12"
       ],
       products: [],
       items: [],
       groupitems: [],
-      clave: "",
+      clave: ""
     };
   },
   computed: {
     ...mapGetters({
       sale: "sale/getSale",
-      totalProducts: "sale/totalProducts",
+      totalProducts: "sale/totalProducts"
       // products: 'sale/products',
-    }),
+    })
   },
   methods: {
     ...mapActions({
       addProduct: "sale/addProduct",
       removeAllProducts: "sale/removeAllProducts",
-      setSale: "sale/setSale",
+      setSale: "sale/setSale"
     }),
     eol2br(text) {
       if (text) {
@@ -281,7 +281,7 @@ export default {
         let bin = cardnumber.substring(0, 6);
         Mercadopago.getPaymentMethod(
           {
-            bin: bin,
+            bin: bin
           },
           this.setPaymentMethod.bind(this)
         );
@@ -302,12 +302,12 @@ export default {
           payment_method_id: document.getElementById("payment_method_id").value,
           amount: parseFloat(
             document.getElementById("transaction_amount").value
-          ),
+          )
         },
-        function (status, response) {
+        function(status, response) {
           if (status == 200) {
             document.getElementById("installments").options.length = 0;
-            response[0].payer_costs.forEach((installment) => {
+            response[0].payer_costs.forEach(installment => {
               let opt = document.createElement("option");
               opt.text = installment.recommended_message;
               opt.value = installment.installments;
@@ -332,7 +332,7 @@ export default {
       } else {
         document.getElementById("token").value = response.id;
         var inventories = [];
-        this.products.forEach((item) => {
+        this.products.forEach(item => {
           inventories.push(...this.checkInventory(item));
         });
         if (inventories.length) {
@@ -341,31 +341,33 @@ export default {
           sale.deliver_date = "true";
           axios
             .post("sales", { inventories, sale })
-            .then((res) => {
+            .then(res => {
               console.log(res);
-              axios.get("shoppings/removeAll").catch((err) => {
+              axios.get("shoppings/removeAll").catch(err => {
                 console.log(err.response);
               });
               let sale = res.data.sale;
               this.removeAllProducts();
               axios
                 .post("checkout", {
-                  payment_method_id:
-                    document.getElementById("payment_method_id").value,
-                  transaction_amount:
-                    document.getElementById("transaction_amount").value,
+                  payment_method_id: document.getElementById(
+                    "payment_method_id"
+                  ).value,
+                  transaction_amount: document.getElementById(
+                    "transaction_amount"
+                  ).value,
                   token: document.getElementById("token").value,
                   email: document.getElementById("email").value,
-                  sale,
+                  sale
                 })
-                .then((res) => {
+                .then(res => {
                   this.$loading(false);
                   console.log(res.data);
                   this.$router.replace(`/${sale.id}/checkout`);
                   location.reload();
                   this.$snotify.success("Compra reazalizada correctamente");
                 })
-                .catch((err) => {
+                .catch(err => {
                   this.$loading(false);
                   console.log(err);
                   var res = err.response;
@@ -378,7 +380,7 @@ export default {
                   }
                 });
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err.response);
             });
         } else {
@@ -386,8 +388,8 @@ export default {
           $(".modal").modal("hide");
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

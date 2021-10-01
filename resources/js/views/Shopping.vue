@@ -36,8 +36,8 @@
         <div class="row container_list">
           <div
             class="w-full"
-            v-for="item in products"
-            :key="item.id"
+            v-for="item, key in products"
+            :key="key"
           >
             <div class="row">
               <div class="col-7">
@@ -160,7 +160,7 @@
         <tbody>
           <tr
             v-for="(item, index) in products"
-            :key="item.id"
+            :key="index"
           >
             <td style="text-align:center">{{ index + 1 }}</td>
             <td

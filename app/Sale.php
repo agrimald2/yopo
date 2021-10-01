@@ -32,36 +32,36 @@ class Sale extends Model
     ];
 
     protected $casts = [
-      'delivery_price' => 'double',
+        'delivery_price' => 'double',
     ];
 
     public function customer()
     {
-      return $this->belongsTo('App\Customer');
+        return $this->belongsTo('App\Customer');
     }
 
     public function user()
     {
-      return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function delivery()
     {
-      return $this->belongsTo('App\Delivery');
+        return $this->belongsTo('App\Delivery');
     }
 
     public function deliveryman()
     {
-      return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function payment()
     {
-      return $this->belongsTo('App\Payment');
+        return $this->belongsTo('App\Payment');
     }
 
     public function items()
     {
-      return $this->hasMany('App\Inventory');
+        return $this->hasMany('App\Inventory');
     }
 }

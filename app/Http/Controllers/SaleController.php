@@ -350,7 +350,7 @@ class SaleController extends Controller
     {
         $sale = Sale::with('customer', 'delivery', 'user', 'deliveryman')
             ->with(['items' => function ($query) {
-                return $query->with('product');
+                return $query->with('product', 'shoppingOptions');
             }])
             ->with(['payment' => function ($query) {
                 return $query->with('user');

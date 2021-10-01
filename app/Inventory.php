@@ -41,6 +41,11 @@ class Inventory extends Model
         return $this->belongsTo('App\Sale');
     }
 
+    public function shoppingOptions()
+    {
+        return $this->hasMany(ShoppingOption::class);
+    }
+
     public function raw_material()
     {
         return $this->belongsTo(RawMaterial::class);
