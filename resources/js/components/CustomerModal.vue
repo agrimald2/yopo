@@ -277,11 +277,9 @@ select {
   color: #fff;
 }
 
-.form-control {
+input,
+input:focus {
   color: #fff;
-}
-
-input {
   border: 1px solid black;
   background-color: black;
 }
