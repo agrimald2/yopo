@@ -253,7 +253,7 @@ export default {
             .catch(error => {
               this.loading = false;
               this.$snotify.error("Debe haber almenos un producto disponible");
-              setTimeout(() => (window.location = "/store"), 2000);
+              this.$loading(false);
             });
         })
         .catch(err => {
