@@ -245,10 +245,9 @@ export default {
               this.loading = 2;
               var id = res.data.sale.id;
               console.log(res.data.sale.id);
-              window.location.href =
-                "https://api.whatsapp.com/send?phone=51924649794&text=Hola!%20Le%20envío%20los%20datos%20de%20mi%20pedido%3A%20%0Ahttp%3A%2F%2Fyopo.pe%2F" +
-                id +
-                "%2FcheckoutDetails%0AQueda%20a%20la%20espera.";
+
+              const url = `/shopping/${id}/whatsapp`;
+              window.location.href = url;
             })
             .catch(error => {
               this.loading = false;
