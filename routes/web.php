@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shopping\WhatsappAction;
 use Illuminate\Support\Facades\Route;
 // use Illuminate\Http\Request;
 
@@ -134,6 +135,8 @@ Route::get('/checkout', function () {
 Route::get('/shopping', function () {
     return view('store');
 });
+
+Route::get('/shopping/{sale}/whatsapp', 'Shopping\WhatsappAction');
 
 Route::get('{any}', function () {
     return view('app');
